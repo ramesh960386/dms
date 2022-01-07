@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h3>Documents Data</h3>
+    <table class="table table-bordered">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>Doc Name</th>
+                <th>Doc Type</th>
+                <th>Doc Owner</th>
+                <th>Department</th>
+                <th>Description</th>
+                <th>Comment</th>
+<!--                <th>Document</th>-->
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for x in documents %}
+            <tr>
+                <td><a href="{% url 'detail' x.pk %}">{{ x.doc_name }}</a></td>
+                <td>{{ x.get_doc_type_display }}</td>
+                <td>{{ x.doc_owner }}</td>
+                <td>{{ x.doc_dept }}</td>
+                <td>{{ x.description }}</td>
+                <td>{{ x.comment }}</td>
+<!--                <td><a href="{{ x.document.url }}">{{ x.document }}</a></td>-->
+                <td class="text-center">
+                    <!-- Example single danger button -->
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Action
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'detail' x.pk %}">View</a></li>
+                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                      </ul>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+
+    </table>
+{% endblock %}

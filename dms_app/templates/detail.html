@@ -1,0 +1,52 @@
+{% extends "base.html" %} {% load static %}
+
+{% block body %}
+    <style>
+        #the-canvas {
+          border: 1px solid black;
+          direction: ltr;
+        }
+    </style>
+    <h3>Documents Data</h3><hr>
+    <div class="row">
+        <input type='hidden' id='csrf-token' value='{{ csrf_token }}' />
+        <div class="col-4">
+            <p>Doc Name : {{ document.doc_name }}</p>
+            <p>Doc Type : {{ document.get_doc_type_display }}</p>
+            <p>Doc Owner : {{ document.doc_owner }}</p>
+            <p>Department : {{ document.doc_dept }}</p>
+            <p>Description : {{ document.description }}</p>
+            <p>Comment : {{ document.comment }}</p>
+            <p>created_by : {{ document.created_by }}</p>
+            <p>created_at : {{ document.created_at }}</p>
+            <p>modified_by : {{ document.modified_by }}</p>
+            <p>updated_at : {{ document.updated_at }}</p>
+            <button type="button" class="btn btn-primary" id="download-btn" objId="{{ document.id }}" file-name="{{ document.document }}">Download PDF</button>
+            <button type="button" class="btn btn-primary" id="display-btn" objId="{{ document.id }}" file-name="{{ document.document }}">Display PDF</button>
+            <button type="button" class="btn btn-primary" id="pdf-btn" objId="{{ document.id }}" file-name="{{ document.document }}" url="{{ document.document.url }}">PDF JS</button>
+        </div>
+
+        <div class="col-6">
+            <canvas id="the-canvas" ></canvas>
+        </div>
+         <iframe id="myFrame" hidden
+                style="width:600px; height:500px;" frameborder="0">
+        </iframe>
+    </div>
+
+    <hr>
+
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+      <a type="button" class="btn btn-outline-primary" href="{% url 'home' %}">Back</a>
+      <a type="button" class="btn btn-outline-primary" href="#">Edit</a>
+      <a type="button" class="btn btn-outline-primary" href="#">Delete</a>
+      <a type="button" class="btn btn-outline-primary" href="#">Share</a>
+      <a type="button" class="btn btn-outline-primary" href="#">History</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <script type="text/javascript" src="{% static 'js/best_download.js' %}"></script>
+{% endblock %}
+
+
