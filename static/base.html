@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,10 +11,8 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbars/">
 
-    
-
     <!-- Bootstrap core CSS -->
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -30,11 +29,10 @@
         }
       }
     </style>
-
     
     <!-- Custom styles for this template -->
-    <link href="navbar.css" rel="stylesheet">
-    <link href="sidebars.css" rel="stylesheet">
+    <link href="{% static 'css/navbar.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'sidebars.css' %}" rel="stylesheet">
   </head>
   <body>
     
@@ -143,7 +141,7 @@
   </main>
 
 
-  <script src="assets/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="sidebars.js"></script>      
+  <script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'sidebars.js' %}"></script>
   </body>
 </html>

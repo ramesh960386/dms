@@ -256,3 +256,4 @@ modules.xml
 # api testing http files
 *.http
 help/
+#get_token.py

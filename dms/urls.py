@@ -22,5 +22,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dms_app.urls'))
-] + static(se.MEDIA_URL, document_root=se.MEDIA_ROOT)
+]
+
+if se.DEBUG:
+    urlpatterns += static(se.MEDIA_URL, document_root=se.MEDIA_ROOT)
+    urlpatterns += static(se.STATIC_URL, document_root=se.STATIC_ROOT)
 

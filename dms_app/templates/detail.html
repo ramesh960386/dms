@@ -2,7 +2,7 @@
 
 {% block body %}
     <style>
-        #the-canvas {
+        .the-canvas {
           border: 1px solid black;
           direction: ltr;
         }
@@ -21,9 +21,12 @@
             <p>created_at : {{ document.created_at }}</p>
             <p>modified_by : {{ document.modified_by }}</p>
             <p>updated_at : {{ document.updated_at }}</p>
-            <button type="button" class="btn btn-primary" id="download-btn" objId="{{ document.id }}" file-name="{{ document.document }}">Download PDF</button>
-            <button type="button" class="btn btn-primary" id="display-btn" objId="{{ document.id }}" file-name="{{ document.document }}">Display PDF</button>
-            <button type="button" class="btn btn-primary" id="pdf-btn" objId="{{ document.id }}" file-name="{{ document.document }}" url="{{ document.document.url }}">PDF JS</button>
+            <button type="button" class="btn btn-primary" id="download-btn" objId="{{ document.id }}"
+                    url="{{ document.document.url }}" file-access="download"
+                    file-name="{{ document.document }}">Download PDF</button>
+            <button type="button" class="btn btn-primary" id="pdf-btn" objId="{{ document.id }}"
+                    url="{{ document.document.url }}" file-access="inline"
+                    file-name="{{ document.document }}" >Display PDF</button>
         </div>
 
         <div class="col-6">

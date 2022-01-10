@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 
 
@@ -38,71 +39,60 @@ def is_ajax(self):
     return self.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
 
 
-@api_view(['POST'])
-@renderer_classes([JSONRenderer])
-def file_mngt(request, id):
-    print(request.headers)
-    obj = DocumentModel.objects.get(id=id)
-    access_granted = False
 
-    user = request.user
-    if user.is_authenticated:
-        if user.is_staff:
-            # If admin, everything is granted
-            access_granted = True
-        else:
-            # For simple user, only their documents can be accessed
-            # doc = user.related_PRF_user.i_image  #Customize this...
-            access_granted = True
+class MediaControl(APIView):
+    # renderer_classes = [JSONRenderer]
+    # permission_classes = (IsAuthenticated,)
 
-    if access_granted:
+    def get_object(self, **kwargs):
         try:
-            file_path = os.path.join(se.MEDIA_ROOT, obj.document.name)
-            filename = os.path.basename(file_path)
-            if os.path.exists(file_path):
-                response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
-                response['Content-Length'] = os.path.getsize(file_path)
-                response['Content-Disposition'] = "attachment; filename=%s" % filename
-                return response
-        except Exception as e:
-            print(e)
-    return HttpResponseForbidden('Not authorized to access this media.')
+            return DocumentModel.objects.get(**kwargs)
+        except DocumentModel.DoesNotExist:
+            raise Http404
 
-
-class DownloadFile(APIView):
-    renderer_classes = [JSONRenderer]
-
-    def post(self, request, id, format=None):
+    def file_mngmt(self, file, option):
         try:
-            obj = DocumentModel.objects.get(id=id)
-            file_path = os.path.join(se.MEDIA_ROOT, obj.document.name)
+            obj = self.get_object(document="uploads/" + file)
+            file_path = os.path.join(se.MEDIA_ROOT, obj.document.name).replace('\\', '/')
             filename = os.path.basename(file_path)
+
             if os.path.exists(file_path):
-                response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+                response = FileResponse(obj.document, content_type='application/pdf')
+                # response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
                 response['Content-Length'] = os.path.getsize(file_path)
-                response['Content-Disposition'] = "attachment; filename=%s" % filename
+                # response['Content-Disposition'] = "inline; filename=%s" % filename
+                # response['Content-Disposition'] = "attachment; filename=%s" % filename
+                response['Content-Disposition'] = "{}; filename={}".format(option, filename)
                 return response
+            return Response({"data": "path doesn't exists"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            print(e)
+            return Response({'data': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
-class MediaAccess(APIView):
-    renderer_classes = [JSONRenderer]
-
-    def get(self, request, path):
-        print(request.headers)
-        try:
-            obj = DocumentModel.objects.get(document='uploads/' + path)
-            file_path = os.path.join(se.MEDIA_ROOT, obj.document.name)
-            filename = os.path.basename(file_path)
-            if os.path.exists(file_path):
-                response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
-                response['Content-Length'] = os.path.getsize(file_path)
-                response['Content-Disposition'] = "attachment; filename=%s" % filename
-                return response
-        except Exception as e:
-            print(e)
+    def get_file_access(self, request):
+        user = request.user
+        if user.is_authenticated:
+            if user.is_staff:
+                # If admin, everything is granted
+                 return True
+            else:
+                # For simple user, only their documents can be accessed
+                # doc = user.related_PRF_user.i_image  #Customize this...
+                return True
+        # return Response({'data': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
+        # return HttpResponseForbidden('Not authorized to access this media.')
+        return False
 
 
-def media_access(request, path):
-    print(request.headers)
-    return HttpResponseForbidden('Not authorized to access this media.')
+    def get(self, request, file):
+        print('get')
+        access_type = request.query_params.get('type')
+        if self.get_file_access(request):
+            return self.file_mngmt(file, access_type)
+        return Response({'data': 'not allowed to access to this media file.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+    def post(self, request, file):
+        access_type = request.query_params.get('type')
+        if self.get_file_access(request):
+            print('ok')
+            return self.file_mngmt(file, access_type)
+        return Response({'data': 'not allowed to access to this media file.'}, status=status.HTTP_401_UNAUTHORIZED)
