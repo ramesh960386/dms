@@ -18,6 +18,8 @@ if __name__ == '__main__':
     https: // www.geeksforgeeks.org / implement - token - authentication - using - django - rest - framework /
     https://simpleisbetterthancomplex.com/tutorial/2018/11/22/how-to-implement-token-authentication-using-django-rest-framework.html
     https://studygyaan.com/django/how-to-secure-media-files-in-django
+    https://www.django-rest-framework.org/topics/ajax-csrf-cors/
+    pip freeze > requirements.txt
     @@@@@@@@@@
     https://stackoverflow.com/questions/50188750/ajax-response-need-to-be-converted-to-blob
     https://www.coderrocketfuel.com/article/get-the-url-origin-of-a-web-page-in-javascript
