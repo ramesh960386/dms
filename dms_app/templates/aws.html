@@ -1,0 +1,843 @@
+<!doctype html>
+{% load static %}
+<html ng-app="GorillaBoy" ng-strict-di="" class="ng-scope">
+    <head>
+        <style type="text/css">.uib-time input{width:50px;}</style>
+        <style type="text/css">[uib-tooltip-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-html-popup].tooltip.right-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.top-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-left > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.bottom-right > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.left-bottom > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-top > .tooltip-arrow,[uib-tooltip-template-popup].tooltip.right-bottom > .tooltip-arrow,[uib-popover-popup].popover.top-left > .arrow,[uib-popover-popup].popover.top-right > .arrow,[uib-popover-popup].popover.bottom-left > .arrow,[uib-popover-popup].popover.bottom-right > .arrow,[uib-popover-popup].popover.left-top > .arrow,[uib-popover-popup].popover.left-bottom > .arrow,[uib-popover-popup].popover.right-top > .arrow,[uib-popover-popup].popover.right-bottom > .arrow,[uib-popover-html-popup].popover.top-left > .arrow,[uib-popover-html-popup].popover.top-right > .arrow,[uib-popover-html-popup].popover.bottom-left > .arrow,[uib-popover-html-popup].popover.bottom-right > .arrow,[uib-popover-html-popup].popover.left-top > .arrow,[uib-popover-html-popup].popover.left-bottom > .arrow,[uib-popover-html-popup].popover.right-top > .arrow,[uib-popover-html-popup].popover.right-bottom > .arrow,[uib-popover-template-popup].popover.top-left > .arrow,[uib-popover-template-popup].popover.top-right > .arrow,[uib-popover-template-popup].popover.bottom-left > .arrow,[uib-popover-template-popup].popover.bottom-right > .arrow,[uib-popover-template-popup].popover.left-top > .arrow,[uib-popover-template-popup].popover.left-bottom > .arrow,[uib-popover-template-popup].popover.right-top > .arrow,[uib-popover-template-popup].popover.right-bottom > .arrow{top:auto;bottom:auto;left:auto;right:auto;margin:0;}[uib-popover-popup].popover,[uib-popover-html-popup].popover,[uib-popover-template-popup].popover{display:block !important;}</style>
+        <style type="text/css">.uib-datepicker-popup.dropdown-menu{display:block;float:none;margin:0;}.uib-button-bar{padding:10px 9px 2px;}</style>
+        <style type="text/css">.uib-position-measure{display:block !important;visibility:hidden !important;position:absolute !important;top:-9999px !important;left:-9999px !important;}.uib-position-scrollbar-measure{position:absolute !important;top:-9999px !important;width:50px !important;height:50px !important;overflow:scroll !important;}.uib-position-body-scrollbar-measure{overflow:scroll !important;}</style>
+        <style type="text/css">.uib-datepicker .uib-title{width:100%;}.uib-day button,.uib-month button,.uib-year button{min-width:100%;}.uib-left,.uib-right{width:100%}</style>
+        <style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style>
+        <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="notranslate" name="google">
+        <meta content="app-id=com.amazon.zocalo" name="google-play-app">
+        <meta content="app-id=B00KI72W7Y" name="kindle-fire-app">
+        <meta content="app-id=878419553" name="ios-app">
+        <title>MyDocs - WorkDocs</title>
+        <link href="{% static 'aws/images/apple-touch-icon.png' %}" rel="apple-touch-icon-precomposed">
+  
+        <script>
+            /*
+            //<![CDATA[
+            if (self === top) {
+                var antiClickjack = document.getElementById('antiClickjack');
+                antiClickjack.parentNode.removeChild(antiClickjack);
+            } else {
+                top.location = self.location;
+            }
+            //]]>
+            */
+        </script>
+        <script>
+            /*
+            //<![CDATA[
+            // Redirect from deprecared awsapps.net to .com
+            (function () {
+                var oldHostname = /awsapps\.net$/;
+                if (oldHostname.test(window.location.hostname)) {
+                var newLocation = window.location.protocol + '//' +
+                                    window.location.hostname.replace(oldHostname, 'awsapps.com') +
+                                    (window.location.port ? ':' + window.location.port : '') +
+                                    window.location.pathname + window.location.search +
+                                    window.location.hash;
+                window.location.replace(newLocation);
+                }
+            })();
+            //]]>
+            */
+        </script>
+        <script>
+            /*
+            //<![CDATA[
+                function determinePreferredLanguage() {
+                    var languages = {
+                            regionIndependent : ['de', 'en', 'es', 'fr', 'ja', 'ko'],
+                            regionDependent : ['pt-br', 'zh-cn']
+                        },
+                        preferredLanguages = navigator.languages || navigator.browserLanguage || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+                        numLanguages = preferredLanguages.length,
+                        language = 'en',
+                        preferredLanguage;
+                    preferredLanguages = [].concat(preferredLanguages);
+
+                    //determine user preferred language
+                    for (var i = 0; i < numLanguages; i++) {
+                        preferredLanguage = preferredLanguages[i].toLowerCase();
+                        if (languages.regionDependent.indexOf(preferredLanguage) > -1) {
+                            language = preferredLanguage;
+                            break;
+                        } else {
+                            preferredLanguage = preferredLanguage.substring(0,2);
+                            if (languages.regionIndependent.indexOf(preferredLanguage) > -1) {
+                                language = preferredLanguage;
+                                break;
+                            }
+                        }
+                    }
+
+                    return language;
+                }
+            //]]>
+            */
+        </script>
+        <link href="{% static 'aws/styles_7f6831b3411c5993b14df11e3f2da58e.css' %}" rel="stylesheet">
+        <script type="text/javascript" src="{% static 'aws/vendor_0b0920585c8e0472a0f6.js' %}"></script>
+        <script type="text/javascript" src="{% static 'aws/app_68cd5e064d281cc76f60.js' %}"></script>
+    </head>
+
+    <body ng-class="getBodyClass()" click-stream-metrics="" class="en browser-non-ie uib-dropdown-open" style="">
+        <!-- ngView: -->
+        <div ng-view="" style="height: 100%; position: relative;" class="ng-scope">
+            <upload-pane class="ng-scope">
+                <!-- ngIf: layout.showUploadPane -->
+                <div id="id_upload_pane" ng-if="layout.showUploadPane" class="ng-scope" style="">
+                <!-- ngIf: !inDocumentView -->
+                <file-browser-upload type="folders" drag="drag_upload_pane" ng-if="!inDocumentView" class="ng-scope">
+                    <div class="file_input_div">
+                        <input tabindex="-1" id="id_file_input_pane" type="file" name="files[]" multiple="" directory="" webkitdirectory="" mozdirectory="" class="hidden fileInput jquery_file_upload_widget">
+                    </div>
+                </file-browser-upload>
+                <!-- end ngIf: !inDocumentView -->
+                <!-- ngIf: inDocumentView -->
+                <div ng-transclude=""></div>
+                <div id="page-border">
+                    <div class="mask"></div>
+                    <div class="detail">
+                        <div class="message">
+                            <div class="upload-icon sprite-icon icon-SVG_upload"></div>
+                            <div class="text wd-text-l14 ng-scope" translate="">Drag &amp; drop files or folders here</div>
+                            <div class="icons">
+                                <span class="icon-SVG_image"></span>
+                                <span class="icon-SVG_pdf"></span>
+                                <span class="icon-SVG_sheet"></span>
+                                <span class="icon-SVG_folder"></span>
+                                <span class="icon-SVG_text"></span>
+                                <span class="icon-SVG_word"></span>
+                                <span class="icon-SVG_zip"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end ngIf: layout.showUploadPane -->
+            </upload-pane>
+            <iframe id="id_file_download" style="visibility:hidden;display:none" class="ng-scope"></iframe>
+            <div class="container-fluid ng-scope">
+            <error-bar>
+                <div class="messages_container sidebar-transition" ng-style="messages.Offset">
+                    <ul style="margin: 0">
+                        <!-- ngRepeat: message in messages.Messages -->
+                    </ul>
+                </div>
+            </error-bar>
+            <top-nav>
+                <!-- ngIf: !layout.inOfficeEditorView && !documentState.onlineEditorMode -->
+                <div role="navigation" class="row top-nav ng-scope" style="margin: 0px 0px;" ng-if="!layout.inOfficeEditorView &amp;&amp; !documentState.onlineEditorMode">
+                    <div style="float: left; display: inline-block;">
+                        <ul class="top-nav-list main-menu-bar-left-padded">
+                            <li class="main-menu-item-padded main-menu-logo">
+                                <a ng-href="#/mydocs" wdcsmkey="workdocs-logo" href="{% static 'images/orb_logo.png' %}">
+                                    <div class="workdocs-logo"></div>
+                                </a>
+                            </li>
+                            <!-- ngRepeat: item in navItems --><!-- ngIf: authenticated -->
+                            <li class="main-menu-item-padded ng-scope" ng-repeat="item in navItems" ng-if="authenticated">
+                                <a id="bubble-MyDocs" href="#/mydocs" ng-attr-wdcsmkey="" ng-class="context == item.context &amp;&amp; currentPage != 'favorites' ? 'bubble-active' : 'bubble'" wdcsmkey="topnav-MyDocs" class="bubble-active">
+                                    <span class="main-menu-text" title="">
+                                        <span class="active-text"><translate class="ng-scope ng-binding">MyDocs</translate></span>
+                                        <!-- This is for the "dot", uncomment this line if needed <div class="active-dot"  ng-if="fileCounts[(item.context)].feedback"></div> -->
+                                    </span>
+                                </a>
+                            </li><!-- end ngIf: authenticated --><!-- end ngRepeat: item in navItems --><!-- ngIf: authenticated --><li class="main-menu-item-padded ng-scope" ng-repeat="item in navItems" ng-if="authenticated">
+                                <a id="bubble-Collaborate" href="#/shared" ng-attr-wdcsmkey="" ng-class="context == item.context &amp;&amp; currentPage != 'favorites' ? 'bubble-active' : 'bubble'" wdcsmkey="topnav-Collaborate" class="bubble">
+                                    <span class="main-menu-text" title="">
+                                        <span class=""><translate class="ng-scope ng-binding">Collaborate</translate></span>
+                                        <!-- This is for the "dot", uncomment this line if needed <div class="active-dot"  ng-if="fileCounts[(item.context)].feedback"></div> -->
+                                    
+                                    </span>
+                                </a>
+                            </li><!-- end ngIf: authenticated --><!-- end ngRepeat: item in navItems --><!-- ngIf: authenticated --><li class="main-menu-item-padded ng-scope" ng-repeat="item in navItems" ng-if="authenticated">
+                                <a id="bubble-Activity" href="#/activities" ng-attr-wdcsmkey="" ng-class="context == item.context &amp;&amp; currentPage != 'favorites' ? 'bubble-active' : 'bubble'" wdcsmkey="topnav-Activity" class="bubble">
+                                    <span class="main-menu-text" title="">
+                                        <span class=""><translate class="ng-scope ng-binding">Activity</translate></span>
+                                        <!-- This is for the "dot", uncomment this line if needed <div class="active-dot"  ng-if="fileCounts[(item.context)].feedback"></div> -->
+                                    </span>
+                                </a>
+                            </li><!-- end ngIf: authenticated --><!-- end ngRepeat: item in navItems -->
+                        </ul>
+                    </div>
+                    <!-- ngIf: authenticated -->
+                    <div style="float: right; display: inline-block;" ng-if="authenticated" class="ng-scope">
+                    <aside-menu-content class="ng-scope aside-menu-content aside-menu-animate close-aside-menu">
+                        <a id="avatar" tabindex="0" class="main-menu-item profile-block" wdcsmkey="topnav-aside-menu" aside-menu-toggle="profile-panel" ng-click="toggleProfilePanel()" ng-keydown="profilePictureKeyDown($event)" aria-label="open profile panel" role="button">
+                            <img class="profile-pic profile-pic-small error-image" ng-src="https://gb-ap-southeast-1-prod-profile-photos.s3.ap-southeast-1.amazonaws.com/.default/LARGE?X-Amz-Security-Token=IQoJb3JpZ2luX2VjECwaDmFwLXNvdXRoZWFzdC0xIkcwRQIge28nR1tCeclf0KsokwFOyFA4bgCSbpeU8ut0lmcOxGYCIQD1lajO9sVtE0FZKmF7cdTEXyorCQ3fWV1KSFAaYdAhEyrRAwhFEAAaDDI0NTg0NTcwOTg1OSIMCZWz3D0qhfPx3gnCKq4DUNKNgA%2FrULdZ7RfsvtFZKI1B8ZVjbytl4PxVR7v0CZdDVonVHST66veOChaKow34eZb3oM0W0CI3A0SHdiCFXMOP837kxgbI87cCacwoSTcVW%2BD40ULCZNYF0OeyFT08GzYdO0Jy5ame9WaYkY%2BhhS4cxKKFIVQVRuXXu7puQj0qmzmgiv8cDyAPOzCI0z0LEPfiNMrMdX%2F5Kg6Y%2FB1VDMfECkI1qDt5T2inWa%2Bef3L7kBdQKibN3iBGaf5muiK16kgpoQPFbVxs8tvwY%2BFZtxOeF%2BJN7T8c8EJIXj%2FHEr9lyAa2sFSKj4oYsjglE8MT5C4ccKzHE0ooVqXo0Ic5lIg6VjLWyTMgCFlTRbrR4TYRNPvytiS7ikZoVXTD7%2BLc5THR43feCZ87QMaI%2BA2Be52Z1GdvOvqZF9vK37qnXcL0F0LLdMVN27ZqibvqjhSMfdJGdhSm2SEE%2BONnBd5pzPSgeH385uv3GUe4XdjPxSrmFskIH9tfHYXv%2B366oeLCz7%2FU3pt9cazs6E0f8tEiyylCjdfKIPyEfftvRjmxZQ1d2rbhoEgjgz0R0bh3jDCY%2FvqOBjqhAccJsbDNzvSDKU6FZcKluTxQ7RkucZ7WDelJCYzYCAlaRJwDXy0IAUobeOdXriz%2FMvRitUHTI2xV5gCv8EWp1nJb54Q%2FspjZ1GxdvRGHatfW83%2BWsAyZv6t1RpkIan7jJqaTzYM8ocY8eUJEumb60%2FG33tS%2FKB%2FNRgaTT0M50PS4R4jrPboZIlP0sPe1DNlvqpy989iYfIMBaXPm05yfX9Be&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20220112T121924Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=28800&amp;X-Amz-Credential=ASIATSPML2QRW7Y6WW46%2F20220112%2Fap-southeast-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=c55ed72000d4762b37b48e8b463d19b04b50ab83e1a44ad5f6fe24c05a794bb4" 
+                            error-src="{% static 'aws/images/default.png' %}" src="{% static 'aws/images/default.png' %}">
+                        </a>
+                    </aside-menu-content>
+                    <ul class="top-nav-options">
+                        <!-- ngIf: isAppButtonVisible() -->
+                        <li ng-if="isAppButtonVisible()" class="ng-scope">
+                            <!-- ngIf: !(administrator && !isFeatureEnabled(Features.UI.MIGRATIONS_DISABLED)) -->
+                            <!-- ngIf: administrator && !isFeatureEnabled(Features.UI.MIGRATIONS_DISABLED) -->
+                            <span class="bubble ng-scope" ng-if="administrator &amp;&amp; !isFeatureEnabled(Features.UI.MIGRATIONS_DISABLED)">
+                                <a class="main-menu-text-unbold ng-scope" href="" aria-label="Apps, click to see WorkDocs apps" tabindex="0" target="_blank" wdcsmkey="topnav-apps" ng-click="appsButtonClickHandler()" uib-popover="Download apps" popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true" feature-notification="APPS" notification-ready="!isFeatureEnabled(Features.UI.MIGRATIONS_DISABLED)" notification-title="MIGRATIONS" notification-content="Migrate your organization’s data from Amazon S3 using WorkDocs Migration Service. Available for WorkDocs Admin users only." notification-placement="bottom" translate="">Apps</a>
+                            </span><!-- end ngIf: administrator && !isFeatureEnabled(Features.UI.MIGRATIONS_DISABLED) -->
+                        </li><!-- end ngIf: isAppButtonVisible() -->
+                        <!-- ngIf: isNewButtonVisible() -->
+                        <li ng-if="isNewButtonVisible()" class="ng-scope">
+                            <new-button class="ng-scope">
+                                <span class="bubble dropdown" uib-dropdown="" keyboard-nav="">
+                                    <!-- ngIf: isNewButtonEnabled() -->
+                                    <a href="" ng-if="isNewButtonEnabled()" tabindex="0" class="main-menu-text-unbold ng-scope dropdown-toggle" uib-dropdown-toggle="" translate="" role="button" aria-label="Create resource, click to see options" aria-haspopup="true" aria-expanded="false">Create</a>
+                                    <!-- end ngIf: isNewButtonEnabled() -->
+                                    <!-- ngIf: isNewButtonEnabled() -->
+                                    <ul ng-if="isNewButtonEnabled()" class="dropdown-menu ng-scope" uib-dropdown-menu="">
+                                        <!-- ngIf: showCreateNoteButton() -->
+                                        <!-- ngIf: showCreateNewFileButtons() -->
+                                        <!-- ngIf: showCreateNewFileButtons() -->
+                                        <!-- ngIf: showCreateNewFileButtons() -->
+                                        <!-- ngIf: showCreateNewFolderButton() -->
+                                        <li ng-if="showCreateNewFolderButton()" class="ng-scope">
+                                            <a tabindex="0" aria-label="Create a new folder" ng-keydown="newFolderKeyDownHandler($event)" wdcsmkey="file_browser_action_bar_create_folder">
+                                                <create-folder-menu-option class="ng-scope">
+                                                    <span ng-click="showCreateFolderModal()" style="display: inline-block;height: 100%;width: 100%;outline: none" translate="" class="ng-scope">Folder</span>
+                                                </create-folder-menu-option>
+                                            </a>
+                                        </li>
+                                        <!-- end ngIf: showCreateNewFolderButton() -->
+                                        <!-- ngIf: showApprovalButton() -->
+                                    </ul>
+                                    <!-- end ngIf: isNewButtonEnabled() -->
+                                </span>
+                            </new-button>
+                            </li><!-- end ngIf: isNewButtonVisible() -->
+                            <!-- ngIf: isTaskEnabled() --><li ng-click="goto('/assignedTasks')" ng-if="isTaskEnabled()" class="ng-scope">
+                                <span wdcsmkey="topnav-tasks" ng-class=" context == 'TASKS' ? 'bubble-active' : 'bubble' " feature-notification="TASKS" notification-title="Tasks" notification-content="You can now create tasks to request access to a document, transfer ownership, contact administrators etc." notification-placement="bottom" class="bubble">
+                                    <a class="main-menu-text-unbold ng-scope" aria-label="Tasks, click to see assigned tasks" tabindex="0" href="#/assignedTasks" translate="">Tasks</a>
+                                    <!-- ngIf: showTaskBadge() -->
+                                </span>
+                            </li><!-- end ngIf: isTaskEnabled() -->
+                        <li>
+                            <span uib-dropdown="" class="bubble dropdown" keyboard-nav="">
+                                <a href="" class="main-menu-text-unbold ng-scope dropdown-toggle" tabindex="0" aria-label="Support" role="button" uib-dropdown-toggle="" target="_blank" translate="" aria-haspopup="true" aria-expanded="false">Support</a>
+                                <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu="">
+                                    <li>
+                                        <a wdcsmkey="topnav-integrations" tabindex="0" href="https://amazonworkdocs.com/apps.html" target="_blank" rel="noopener noreferrer" translate="" class="ng-scope">Integrations</a>
+                                        <a wdcsmkey="topnav-feedback-link" tabindex="0" ng-href="https://aws.asia.qualtrics.com/SE/?SID=SV_8I03Vr6nEKrxjXT" target="_blank" rel="noopener noreferrer" translate="" class="ng-scope" href="https://aws.asia.qualtrics.com/SE/?SID=SV_8I03Vr6nEKrxjXT">Feedback</a>
+                                        <a wdcsmkey="topnav-forum-link" tabindex="0" ng-href="https://forums.aws.amazon.com/forum.jspa?forumID=172" target="_blank" rel="noopener noreferrer" translate="" class="ng-scope" href="https://forums.aws.amazon.com/forum.jspa?forumID=172">Forums</a>
+                                        <a wdcsmkey="topnav-help-link" tabindex="0" ng-href="https://amazonworkdocs.com/web-help" target="_blank" rel="noopener noreferrer" translate="" class="ng-scope" href="https://amazonworkdocs.com/web-help">Help</a>
+                                        <!-- ngIf: isTaskEnabled() && !isFeatureEnabled(Features.UI.DISABLE_CONTACT_ADMIN_TASKS) --><a wdcsmkey="topnav-notify-admin-link" tabindex="0" ng-if="isTaskEnabled() &amp;&amp; !isFeatureEnabled(Features.UI.DISABLE_CONTACT_ADMIN_TASKS)" ng-click="showContactAdminModal()" translate="" class="ng-scope">Contact Admininstrator</a>
+                                        <!-- end ngIf: isTaskEnabled() && !isFeatureEnabled(Features.UI.DISABLE_CONTACT_ADMIN_TASKS) -->
+                                        <!-- ngIf: isAmazonSite -->
+                                        <!-- ngIf: isPreviewEnabled() -->
+                                    </li>
+                                </ul>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- end ngIf: authenticated -->
+                <div class="top-nav-search-container">
+        <!-- ngIf: authenticated --><search class="search main-menu-item ng-scope" ng-if="authenticated"><a wdcsmkey="search_icon_clicked" class="icon-SVG_search" ng-click="focusOrSearch()"> </a><!--
+--><input id="search_box" class="search-text ng-pristine ng-untouched ng-valid ng-empty" type="text" ng-attr-placeholder="" ng-model="searchInfo.query" ng-keyup="$event.keyCode == 13 ? search() : null" autocomplete="off" aria-label="Enter search keyword, then press enter to search" placeholder="Search">
+<!-- ngIf: isSearchV2Enabled --><button class="wd-button-blue advanced-button ng-binding ng-scope" ng-class="{'enabled': searchViewModel.isSearchMenuOpen}" wdcsmkey="search_advance_options_icon_clicked" ng-if="isSearchV2Enabled" ng-click="toggleSearchMenu()" feature-notification="SEARCH_V2" notification-title="Advanced Search" notification-content="You can now filter by file type, location, time and owners" notification-placement="bottom" search-menu-toggle="" aria-label="Press to open advanced search menu">Advanced</button><!-- end ngIf: isSearchV2Enabled -->
+<!-- The empty comment between <a> and <input> is to avoid white space between inline elements-->
+</search><!-- end ngIf: authenticated -->
+    </div>
+</div><!-- end ngIf: !layout.inOfficeEditorView && !documentState.onlineEditorMode -->
+<!-- ngIf: searchViewModel.isSearchMenuOpen -->
+<aside-menu id="profile-panel" side="right" width="300px" style="overflow-y: auto; width: 300px; right: -300px; z-index: 99;" is-backdrop="false" push-content="false" class="aside-menu aside-menu-animate">
+    <div id="profile-div" role="dialog">
+        <!-- replace with checkmark icon -->
+        <a id="profile-panel-done" aside-menu-toggle="profile-panel" tabindex="-1" role="button" aria-label="close profile panel" ng-click="closeProfilePanel()" ng-keydown="profilePanelDoneKeyDown($event)"><div class="icon-SVG_check"></div></a>
+        <div id="profile-account-title" translate="" class="ng-scope">My account</div>        
+        <div class="profile-image-container">
+            <form name="profileForm" bindonce="profile" id="profileForm" class="form-horizontal ng-pristine ng-valid" ng-submit="updateProfile()">
+                <div>
+                    <div class="profile-photo-container" ng-click="updateProfilePhoto()" tabindex="-1" role="button" aria-label="edit profile picture">
+                      <div id="profile_photo">
+                          <!-- This img element will be replaced by ProfileController.js javascript -->
+                          <img class="profile-panel-person-thumbnail person-thumbnail-large error-image" 
+                          ng-src="https://gb-ap-southeast-1-prod-profile-photos.s3.ap-southeast-1.amazonaws.com/.default/LARGE?X-Amz-Security-Token=IQoJb3JpZ2luX2VjECwaDmFwLXNvdXRoZWFzdC0xIkcwRQIge28nR1tCeclf0KsokwFOyFA4bgCSbpeU8ut0lmcOxGYCIQD1lajO9sVtE0FZKmF7cdTEXyorCQ3fWV1KSFAaYdAhEyrRAwhFEAAaDDI0NTg0NTcwOTg1OSIMCZWz3D0qhfPx3gnCKq4DUNKNgA%2FrULdZ7RfsvtFZKI1B8ZVjbytl4PxVR7v0CZdDVonVHST66veOChaKow34eZb3oM0W0CI3A0SHdiCFXMOP837kxgbI87cCacwoSTcVW%2BD40ULCZNYF0OeyFT08GzYdO0Jy5ame9WaYkY%2BhhS4cxKKFIVQVRuXXu7puQj0qmzmgiv8cDyAPOzCI0z0LEPfiNMrMdX%2F5Kg6Y%2FB1VDMfECkI1qDt5T2inWa%2Bef3L7kBdQKibN3iBGaf5muiK16kgpoQPFbVxs8tvwY%2BFZtxOeF%2BJN7T8c8EJIXj%2FHEr9lyAa2sFSKj4oYsjglE8MT5C4ccKzHE0ooVqXo0Ic5lIg6VjLWyTMgCFlTRbrR4TYRNPvytiS7ikZoVXTD7%2BLc5THR43feCZ87QMaI%2BA2Be52Z1GdvOvqZF9vK37qnXcL0F0LLdMVN27ZqibvqjhSMfdJGdhSm2SEE%2BONnBd5pzPSgeH385uv3GUe4XdjPxSrmFskIH9tfHYXv%2B366oeLCz7%2FU3pt9cazs6E0f8tEiyylCjdfKIPyEfftvRjmxZQ1d2rbhoEgjgz0R0bh3jDCY%2FvqOBjqhAccJsbDNzvSDKU6FZcKluTxQ7RkucZ7WDelJCYzYCAlaRJwDXy0IAUobeOdXriz%2FMvRitUHTI2xV5gCv8EWp1nJb54Q%2FspjZ1GxdvRGHatfW83%2BWsAyZv6t1RpkIan7jJqaTzYM8ocY8eUJEumb60%2FG33tS%2FKB%2FNRgaTT0M50PS4R4jrPboZIlP0sPe1DNlvqpy989iYfIMBaXPm05yfX9Be&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Date=20220112T121924Z&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Expires=28800&amp;X-Amz-Credential=ASIATSPML2QRW7Y6WW46%2F20220112%2Fap-southeast-1%2Fs3%2Faws4_request&amp;X-Amz-Signature=c55ed72000d4762b37b48e8b463d19b04b50ab83e1a44ad5f6fe24c05a794bb4" 
+                          error-src="{% static 'aws/images/default.png' %}" src="{% static 'aws/images/default.png' %}">
+                      </div>
+                      <div class="profile-photo-overlay">
+                        <div class="icon-SVG_edit profile-photo-overlay-icon"></div>
+                      </div>
+                    </div>
+                    <div class="profile-upload-button-container">
+                        <gb-profile-input class="ng-scope"><div class="link-button"><label for="id_profile_photo" class="upload-photo-button ng-binding">Change Photo</label><input tabindex="-1" id="id_profile_photo" name="files[]" type="file" class="hidden" accept=".png,.jpg,.jpeg"></div></gb-profile-input>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="profile-info-container">
+            <div style="padding-left: 20px;padding-right: 20px;">
+                <div class="profile-fullname truncate">
+                  <span ng-attr-title="" class="ng-binding" title="ramesh y">ramesh y</span>
+                </div>
+                <div class="profile-username">
+                    <span class="profile-property-value ng-binding">it.rameshy@gmail.com</span>
+                </div>
+                <div class="profile-sitename truncate">
+                  <span ng-attr-title="" translate="" translate-values="{siteName: sitename()}" class="ng-scope" title="ramesh-app">Site Name : ramesh-app</span>
+                </div>
+                <!-- ngIf: isAdmin() --><div class="profile-role ng-binding ng-scope" ng-if="isAdmin()">Role: Admin</div><!-- end ngIf: isAdmin() -->
+                <!-- ngIf: isBasicUser() -->            
+                <div class="profile-account-info">
+                    <div class="profile-email">
+                        <translate class="profile-email-key ng-scope">Email</translate>
+                        <div class="profile-property-value ng-binding">it.rameshy@gmail.com</div>
+                    </div>
+                    <!-- ngIf: sitename() !== 'amazon' --><div class="profile-password ng-scope" ng-if="sitename() !== 'amazon'">
+                      <translate class="profile-password-key ng-scope">Password</translate>
+                      <div class="password-value-container">
+                          <!-- ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] --><div class="profile-password-char ng-scope" ng-repeat="n in [1,2,3,4,5,6,7,8]"></div><!-- end ngRepeat: n in [1,2,3,4,5,6,7,8] -->
+                          <!-- ngIf: !profile.submittedPassword --><a ng-if="!profile.submittedPassword" type="submit" class="profile-change-password regular-link ng-scope" ng-click="initiateChangePassword()" tabindex="-1" role="button" aria-label="Change password" translate="">Change</a><!-- end ngIf: !profile.submittedPassword -->
+                      </div>
+                    </div><!-- end ngIf: sitename() !== 'amazon' -->
+                    <!-- ngIf: isFeatureEnabled(Features.UI.SHOW_HDRIVE_MIGRATION) && authenticated -->
+                </div>            
+              </div>              
+            <!-- Admin section -->
+            <!-- ngIf: isAdmin() --><div class="admin-section ng-scope" ng-if="isAdmin()">
+                <p translate="" class="admin-title ng-scope">Admin</p>
+                <a translate="" class="admin-open-control-panel regular-link ng-scope" href="#/admin" tabindex="-1" role="button">Open admin control panel</a>
+                <!-- Admin icon -->
+                <img>
+            </div><!-- end ngIf: isAdmin() -->
+            <div style="padding-left: 20px;padding-right: 20px;">
+                <!-- ngIf: !isMinimalUser() --><div class="profile-storage-section ng-scope" ng-if="!isMinimalUser()">
+                    <translate class="profile-storage-key profile-storage-label ng-scope">Storage</translate>
+                    <storage-used id="profile-storage" class="profile-storage-container ng-isolate-scope" value="profile.storageUtilizedInBytes" total="profile.storageAllocatedInBytes" type="profile.storage.StorageRule.StorageType" tabindex="setTabIndex()" width="260"><div>
+    <div class="storage-used" ng-style="{'width' :  width + 'px'}" style="width: 260px;">
+        <div ng-class="storageClass" ng-style="{'width' : (percent() * (width - 4) + 'px') }" class="storage-used-free" style="width: 4.8168e-06px;"></div>
+    </div>
+    <p class="storage_used_text ng-scope ng-binding" tabindex="-1" translate="">20.2 KB of 1 TB Used</p>
+</div>
+</storage-used></div><!-- end ngIf: !isMinimalUser() -->
+
+                <div class="profile-account-auth-preferences">                    
+                    <!-- ngIf: authenticated --><div class="logout-link ng-scope" ng-if="authenticated">
+                        <a ng-click="logout()" wdcsmkey="logout_link" class="regular-link" target="_blank" tabindex="-1" role="button">
+                            <div class="logout-icon left-nav-icon"></div>
+                            <span translate="" class="ng-scope">Log out</span>
+                        </a>
+                    </div><!-- end ngIf: authenticated -->
+                </div>
+            </div>
+        </div>
+    </div>
+</aside-menu></top-nav>
+    <div id="search-menu-background" ng-click="hideSearchMenu()"></div>
+    <!-- ngIf: layout.hasRightSidebar && !documentState.onlineEditorMode --><right id="right" ng-if="layout.hasRightSidebar &amp;&amp; !documentState.onlineEditorMode" class="search-menu-blurred ng-scope"><div ng-class="{'expanded-right': layout.showRightSidebar}" class="full-height-no-topnav sidebar-transition" gb-sidebar-resizing-control="" style="position:relative">
+    <!-- Resize grab -->
+    <!-- ngIf: layout.resizableRightSidebar && layout.showRightSidebar -->
+        <div class="sidebar sidebar-transition" ng-class="{'sidebar-transition': useTransition()}" id="right-sidebar">
+            <div ng-attr-id="" id="tab-People">
+                <!-- right panel header -->
+                <div role="menu" class="right-panel-header">
+                    <span class="wd-text-b16 ng-binding">Permissions</span>
+                    <!-- right buttons -->
+                    <span class="pull-right">
+                        <a class="icon-SVG_close" style="vertical-align: sub" ng-click="toggleRightSidebar()" wdcsmkey="right_panel_collapse_panel" uib-popover="Hide Collaboration Information" popover-trigger="mouseenter" popover-placement="left" popover-append-to-body="true"></a>
+                    </span>
+                    
+                </div>
+
+                <!-- right panel body -->
+                <div class="tabcontainer" ng-class="getTabcontainerClassName(sidebar.tabName)" style="margin-left: 0px;">
+                    <!--
+                        Wish I could use ngSwitch to get rid of multiple AND-ed not equals conditions, but unfortunately it acts like
+                        ngHide more than ngIf
+                    -->
+                    <!-- ngIf: layout.view != LayoutViewTypes.VIEW_DOCUMENT_LAYOUT && layout.view != LayoutViewTypes.APPROVALS_VIEW --><file-browser-right-panel ng-if="layout.view != LayoutViewTypes.VIEW_DOCUMENT_LAYOUT &amp;&amp; layout.view != LayoutViewTypes.APPROVALS_VIEW" style="display:block;height: 100%;" class="ng-scope"><div class="sidebar-panel">
+    <!-- ngIf: sidebar.tabName === 'People' --><div class="full-height ng-scope" ng-if="sidebar.tabName === 'People'">
+        <!-- ngIf: layout.showRightSidebar -->
+    </div><!-- end ngIf: sidebar.tabName === 'People' -->
+</div>
+<div class="sidebar-panel approval-sidebar-panel">
+    <!-- ngIf: sidebar.tabName === AppConstants.RightTabTypes.NEW_APPROVAL_REQUEST_TAB -->
+</div>
+<div class="sidebar-panel"></div>
+<div class="sidebar-panel" id="security">
+    <!-- ngIf: sidebar.selectedIndex == (RIGHT_TABS.Security.index) -->
+</div>
+</file-browser-right-panel><!-- end ngIf: layout.view != LayoutViewTypes.VIEW_DOCUMENT_LAYOUT && layout.view != LayoutViewTypes.APPROVALS_VIEW -->
+
+                    <!-- ngIf: layout.view === LayoutViewTypes.VIEW_DOCUMENT_LAYOUT -->
+
+                    <!-- ngIf: layout.view === LayoutViewTypes.APPROVALS_VIEW -->
+            </div>
+        </div>
+    </div>
+</div>
+</right><!-- end ngIf: layout.hasRightSidebar && !documentState.onlineEditorMode -->
+    <div class="content main search-menu-blurred main-owned" id="layout" ng-class="(documentState.onlineEditorMode ? 'full-height main-':'main-') + layout.view.toLowerCase()">
+        <!-- ngIf: !getBooleanValueIfInitialized(layout.news) && !getBooleanValueIfInitialized(layout.inOfficeEditorView) && !documentState.onlineEditorMode --><!-- ngInclude: layout.partialTitleBar --><div ng-if="!getBooleanValueIfInitialized(layout.news) &amp;&amp; !getBooleanValueIfInitialized(layout.inOfficeEditorView) &amp;&amp; !documentState.onlineEditorMode" ng-include="layout.partialTitleBar" id="mainTitleBar" ng-class="'mainTitleBar-' + layout.view.toLowerCase()" class="ng-scope mainTitleBar-owned"><!-- ngIf: authenticated --><div role="menu" class="menu ng-scope" ng-if="authenticated">
+    <div class="menu-row">
+        <secondary-nav path="path" class="ng-scope"><!-- All users can see the breadcrumb if they land on a subfolder or doc view -->
+<!-- ngIf: context === 'SUB_FOLDER_OR_DOC' -->
+
+<!-- Sub Menu Items for authenticated full-service user -->
+<!-- ngIf: authenticated && !isMinimalUser && context !== 'SUB_FOLDER_OR_DOC' --><div ng-if="authenticated &amp;&amp; !isMinimalUser &amp;&amp; context !== 'SUB_FOLDER_OR_DOC'" class="menu-bar ng-scope">
+
+    <!-- ngIf: context === "MY_DOCUMENTS" || context === "FAVORITES" --><div ng-if="context === &quot;MY_DOCUMENTS&quot; || context === &quot;FAVORITES&quot;" class="menu-bar ng-scope">
+        <ul class="menu-bar-left-padded">
+            <li class="menu-item-padded" wdcsmkey="secondary_nav_mydocs">
+                <wd-link css-class="menu-text" display="TOP_NAV.MYDOCS" href="#/mydocs" callback="refreshView(ViewTypes.OWN_TYPE)" active="currentPage=='mydocs'" class="ng-isolate-scope"><span>
+    <a class="menu-text" title="" ng-click="callback()" ng-href="#/mydocs" href="#/mydocs">
+
+        <!-- ngIf: leftIcon != null -->
+
+        <span class="active-text"><translate class="ng-scope ng-binding">MyDocs</translate></span>
+
+        <!-- ngIf: headCount -->
+
+        <!-- ngIf: headActive -->
+
+        <!-- ngIf: rightIcon != null -->
+
+    </a>
+</span>
+</wd-link>
+            </li>
+            <!-- ngIf: isOnlineNoteEnabled() -->
+            <li class=" menu-item-padded" wdcsmkey="secondary_nav_recyclebin">
+                <wd-link css-class="menu-text" display="LEFT_NAV.RECYCLE_BIN" href="#/recycle" callback="refreshView(ViewTypes.RECYCLE_TYPE)" active="currentPage=='recycle'" class="ng-isolate-scope"><span>
+    <a class="menu-text" title="" ng-click="callback()" ng-href="#/recycle" href="#/recycle">
+
+        <!-- ngIf: leftIcon != null -->
+
+        <span class=""><translate class="ng-scope ng-binding">Recycle bin</translate></span>
+
+        <!-- ngIf: headCount -->
+
+        <!-- ngIf: headActive -->
+
+        <!-- ngIf: rightIcon != null -->
+
+    </a>
+</span>
+</wd-link>
+            </li>
+            <!-- ngIf: isRecoveryEnabled() -->
+            <li class="menu-item-padded" wdcsmkey="topnav-favorites">
+                <wd-link css-class="menu-text" display="LEFT_NAV.FAVORITES" href="#/favorites" callback="refreshView(ViewTypes.FAVORITES)" active="currentPage == 'favorites'" class="ng-isolate-scope"><span>
+    <a class="menu-text" title="" ng-click="callback()" ng-href="#/favorites" href="#/favorites">
+
+        <!-- ngIf: leftIcon != null -->
+
+        <span class=""><translate class="ng-scope ng-binding">Favorites</translate></span>
+
+        <!-- ngIf: headCount -->
+
+        <!-- ngIf: headActive -->
+
+        <!-- ngIf: rightIcon != null -->
+
+    </a>
+</span>
+</wd-link>
+            </li>
+        </ul>
+    </div><!-- end ngIf: context === "MY_DOCUMENTS" || context === "FAVORITES" -->
+
+    <!-- ngIf: context === "TASKS" -->
+
+    <!-- ngIf: context === "ACTIVITY_FEED" -->
+
+
+    <!-- ngIf: context === "COLLABORATE" -->
+    <!-- ngIf: context === "SEARCH" -->
+</div><!-- end ngIf: authenticated && !isMinimalUser && context !== 'SUB_FOLDER_OR_DOC' -->
+
+
+<!-- Sub Menu Items for authenticated minimal user -->
+<!-- ngIf: authenticated && isMinimalUser -->
+
+<!-- Sub Menu Items for non-authenticated user (anonymous share) -->
+<!-- ngIf: !authenticated -->
+</secondary-nav>
+        <span class="pull-right">
+            <!-- ngIf: !isNewApprovalPanelVisible() --><action-bar ng-if="!isNewApprovalPanelVisible()" class="ng-scope"><!-- ngInclude: templateURL --><div class="top-action-bar ng-scope" ng-include="templateURL"><file-browser-upload style="display: none;" type="files" class="ng-scope"><div class="file_input_div"><input tabindex="-1" id="id_file_input" type="file" name="files[]" multiple="multiple" class="hidden fileInput jquery_file_upload_widget"></div></file-browser-upload>
+<file-browser-upload style="display: none;" type="folder" class="ng-scope"><div class="file_input_div"><input tabindex="-1" id="id_folder_input" type="file" name="files[]" multiple="" directory="" webkitdirectory="" mozdirectory="" class="hidden fileInput jquery_file_upload_widget"></div></file-browser-upload>
+
+<!-- ngIf: isSharedByMeFilterEnabled() -->
+<!-- ngIf: isSharedByMeFilterEnabled() -->
+<!-- ngIf: isSharedByMeFilterEnabled() -->
+
+<!-- ngIf: curMode===MODE.NONE_SELECTED --><span ng-if="curMode===MODE.NONE_SELECTED" class="ng-scope">
+    <folder-action-button class="menu-button ng-scope" enabled="false"><!-- ngIf: !enabled --><span ng-if="!enabled" class="dropdown-menu-container ng-scope">
+    <button class="wd-button-white disabled-button ng-binding">Actions<span class="icon-SVG_carat-down drop-down-arrow"></span></button>
+</span><!-- end ngIf: !enabled -->
+<!-- ngIf: enabled --></folder-action-button>
+    <share-button class="menu-button ng-isolate-scope" enabled="false"><span class="dropdown-menu-container dropdown" uib-dropdown="">
+    <!-- ngIf: enabled -->
+    <!-- ngIf: !enabled --><button ng-if="!enabled" class="wd-button-white disabled-button ng-scope" translate="">Share</button><!-- end ngIf: !enabled -->
+    <!-- ngIf: enabled -->
+</span></share-button>
+    <edit-button class="menu-button ng-isolate-scope" enabled="false"><span class="dropdown-menu-container dropdown" uib-dropdown="">
+    <!-- ngIf: enabled && atLeastOneAvailableOption() -->
+    <!-- ngIf: !(enabled && atLeastOneAvailableOption()) --><button ng-if="!(enabled &amp;&amp; atLeastOneAvailableOption())" class="wd-button-blue disabled-button ng-scope" translate="">Edit</button><!-- end ngIf: !(enabled && atLeastOneAvailableOption()) -->
+    <!-- ngIf: enabled && atLeastOneAvailableOption() -->
+</span></edit-button>
+    <!-- ngIf: showUploadButton --><vertical-divider ng-if="showUploadButton" class="menu-button ng-scope"><span style="bottom: 10%;height: 80%;border-left: 1px solid #E0E0E0;box-sizing: border-box; font-size: initial;"></span></vertical-divider><!-- end ngIf: showUploadButton -->
+    <!-- ngIf: showUploadButton --><upload-button ng-if="showUploadButton" class="menu-button ng-scope ng-isolate-scope" enabled="hasUploadPermission &amp;&amp; hasUploadPermission()" file-manager-instance="fileManagerInstance"><span class="dropdown-menu-container dropdown" uib-dropdown="">
+    <!-- ngIf: enabled() --><button ng-if="enabled()" ng-class="applyActiveStyle()? 'wd-button-blue': 'wd-button-white'" uib-dropdown-toggle="" translate="" class="ng-scope dropdown-toggle wd-button-blue" aria-haspopup="true" aria-expanded="false" style="">Upload</button><!-- end ngIf: enabled() -->
+    <!-- ngIf: !enabled() -->
+    <!-- ngIf: enabled() --><ul ng-if="enabled()" class="dropdown-menu dropdown-menu-right ng-scope" role="menu" aria-labelledby="default-roles" uib-dropdown-menu="" style="">
+        <li>
+            <label for="id_file_input" wdcsmkey="file_browser_action_bar_show_upload_files" id="id_file_input_label" class="file_input"><translate class="ng-scope">Upload files</translate></label>
+        </li>
+        <!-- ngIf: isInputDirSupported --><li ng-if="isInputDirSupported" class="ng-scope">
+            <label for="id_folder_input" id="id_folder_label" wdcsmkey="file_browser_action_bar_show_upload_folders" class="file_input"><translate class="ng-scope">Upload folder</translate></label>
+        </li><!-- end ngIf: isInputDirSupported -->
+        <!-- ngIf: !isInputDirSupported -->
+    </ul><!-- end ngIf: enabled() -->
+</span></upload-button><!-- end ngIf: showUploadButton -->
+    <!-- ngIf: showRequestAccessButton() --></span><!-- end ngIf: curMode===MODE.NONE_SELECTED -->
+<!-- ngIf: curMode===MODE.SINGLE_SELECTED -->
+<!-- ngIf: curMode===MODE.MULTI_SELECTED -->
+<lock-and-edit doc="selectedItems[0].item" on-edit-clicked="openInFrictionlessEdit(doc)" lock-file="checkoutDocument(doc)" unlock-file="releaseLock(doc)" class="ng-scope ng-isolate-scope"><!-- ngIf: modalState.show --></lock-and-edit>
+</div></action-bar><!-- end ngIf: !isNewApprovalPanelVisible() -->
+            <!-- ngIf: isNewApprovalPanelVisible() -->
+        </span>
+    </div>
+</div><!-- end ngIf: authenticated -->
+</div><!-- end ngIf: !getBooleanValueIfInitialized(layout.news) && !getBooleanValueIfInitialized(layout.inOfficeEditorView) && !documentState.onlineEditorMode -->
+        <!-- ngIf: !layout.news --><!-- ngInclude: layout.partialContent --><div ng-if="!layout.news" ng-include="layout.partialContent" id="mainContent" ng-class="'mainContent-' + layout.view.toLowerCase() + (documentState.onlineEditorMode? ' onlineEditingStyle' : '')" class="ng-scope mainContent-owned"><div class="full-height ng-scope folder-root" id="folder-div" ng-class="{'folder-root': inRootLayout(), 'folder-subfolder':!inRootLayout()}">
+    <div class="full-width full-height ng-scope" gb-file-browser-resource-highlighter="" right-click-menu="isRightClickSupported" selection-manager="fileManagerInstance" ng-style="scrollWrapperStyle"><div class="full-height" ng-transclude="">
+        <div ng-switch="" on="folderState.folderErrorCode" class="full-height ng-scope">
+            <!-- ngSwitchWhen: 401 -->
+            <!-- ngSwitchWhen: 403 -->
+            <!-- ngSwitchWhen: 404 -->
+            <!-- ngSwitchWhen: 400 -->
+            <!-- ngSwitchDefault: --><div ng-switch-default="" class="folder-content-container full-height ng-scope">
+                <!-- Loading Image -->
+                <!-- Must use ngIf to hide indicator. Otherwise, file browser's header get misplaced in Safari-->
+                <!-- ngIf: !folderState.loaded -->
+
+                <!-- Loaded Content (empty) -->
+                <!-- adding margin to this element is making scrollbar appear for its parent element unnecessarily, hence using padding -->
+                <!-- ngIf: showEmptyMessage() && folderState.loaded -->
+
+                <!-- Loaded Content (non-empty) -->
+                <!-- ngIf: !showEmptyMessage() && folderState.loaded --><div class="file-views full-height file-view-scroll-wrapper ng-scope" ng-if="!showEmptyMessage() &amp;&amp; folderState.loaded" style="">
+                    <!-- ngIf: folderState.viewType !== GalleryTypes.THUMBNAIL_VIEWTYPE --><div class="file-browser-content-padding ng-scope" id="browse-header" ng-if="folderState.viewType !== GalleryTypes.THUMBNAIL_VIEWTYPE">
+                        <div id="browse-sort" class="filelist filelist-title file-view-wrapper">
+                            <span class="th col-checkbox select-box" ng-click="fileManagerInstance.getCurrentFolderAndFileCount() === fileManagerInstance.getTotalSelectedItemCount()? fileManagerInstance.clearSelected(): fileManagerInstance.selectAll()">
+                                <input class="icon-wd-checkbox" type="checkbox" ng-checked="fileManagerInstance.getCurrentFolderAndFileCount() === fileManagerInstance.getTotalSelectedItemCount()">
+                                <label class="icon-wd-checkbox-label"><!-- The input / label must be together --></label>
+                            </span>
+                            <!-- ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() --><span ng-if="!fileManagerInstance.isInTrash() &amp;&amp; !fileManagerInstance.isInRecoveryRoot()" class="th col-favorite ng-scope">
+                                <span class="icon-SVG_star-filled wd-color-class-a3"></span>
+                            </span><!-- end ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() -->
+                            <span id="filename-sort" wdcsmkey="file_browser_list_header_filename" class="th th-sortable col-filename">
+                                <a class="first-header" ng-click="changeSortOrder(sortOptions[1], sortOrder)">
+                                    <translate ng-class="sortOption.text == sortOptions[1].text ? 'activated': null" class="ng-scope">Name</translate>
+                                    <!-- ngIf: !inSharedByMe() --><sort-order-caret ng-if="!inSharedByMe()" activated="sortOption.text == sortOptions[1].text" show="true" order="sortOption.text == sortOptions[1].text &amp;&amp; sortOrder === SortOrder.ASCENDING" class="ng-scope ng-isolate-scope"><!-- ngIf: show --><div ng-if="show" class="marginleft ng-scope caret-style icon-SVG_carat-down" ng-class="{'caret-activated-style': activated, 'caret-style': !activated, 'icon-SVG_carat-up': order, 'icon-SVG_carat-down': !order}"></div><!-- end ngIf: show --></sort-order-caret><!-- end ngIf: !inSharedByMe() -->
+                                </a>
+                            </span>
+
+                            <!-- ngIf: !supportSortOwner() && !(inOwn() || folderState.inOwnFolder || inReview() || inSharedByMe()) -->
+                            <!-- ngIf: supportSortOwner() -->
+                            <!-- ngIf: inReview() -->
+                            <a wdcsmkey="file_browser_list_header_date" class="th th-sortable col-modified" ng-click="changeSortOrder(sortOptions[0], sortOrder)">
+                                <translate ng-class="sortOption.text == sortOptions[0].text ? 'activated': null" class="ng-scope activated">Last modified</translate>
+                                <!-- ngIf: !inSharedByMe() --><sort-order-caret ng-if="!inSharedByMe()" show="true" activated="sortOption.text == sortOptions[0].text" order="sortOption.text == sortOptions[0].text &amp;&amp; sortOrder === SortOrder.ASCENDING" class="ng-scope ng-isolate-scope"><!-- ngIf: show --><div ng-if="show" class="marginleft ng-scope caret-activated-style icon-SVG_carat-down" ng-class="{'caret-activated-style': activated, 'caret-style': !activated, 'icon-SVG_carat-up': order, 'icon-SVG_carat-down': !order}"></div><!-- end ngIf: show --></sort-order-caret><!-- end ngIf: !inSharedByMe() -->
+                            </a>
+                            <a wdcsmkey="file_browser_list_header_size" class="th th-sortable col-size" ng-click="changeSortOrder(sortOptions[2], sortOrder)">
+                                <translate ng-class="sortOption.text == sortOptions[2].text ? 'activated': null" class="ng-scope">Size</translate>
+                                <!-- ngIf: !inSharedByMe() --><sort-order-caret ng-if="!inSharedByMe()" show="true" activated="sortOption.text == sortOptions[2].text" order="sortOption.text == sortOptions[2].text &amp;&amp; sortOrder === SortOrder.ASCENDING" class="ng-scope ng-isolate-scope"><!-- ngIf: show --><div ng-if="show" class="marginleft ng-scope caret-style icon-SVG_carat-down" ng-class="{'caret-activated-style': activated, 'caret-style': !activated, 'icon-SVG_carat-up': order, 'icon-SVG_carat-down': !order}"></div><!-- end ngIf: show --></sort-order-caret><!-- end ngIf: !inSharedByMe() -->
+                            </a>
+                            <a wdcsmkey="file_browser_list_header_type" class="th th-sortable col-kind last-col" ng-click="changeSortOrder(sortOptions[3], sortOrder)">
+                                <translate ng-class="sortOption.text == sortOptions[3].text ? 'activated': null" class="ng-scope">Type</translate>
+                                <!-- ngIf: !inSharedByMe() --><sort-order-caret ng-if="!inSharedByMe()" show="true" activated="sortOption.text == sortOptions[3].text" order="sortOption.text == sortOptions[3].text &amp;&amp; sortOrder === SortOrder.ASCENDING" class="ng-scope ng-isolate-scope"><!-- ngIf: show --><div ng-if="show" class="marginleft ng-scope caret-style icon-SVG_carat-down" ng-class="{'caret-activated-style': activated, 'caret-style': !activated, 'icon-SVG_carat-up': order, 'icon-SVG_carat-down': !order}"></div><!-- end ngIf: show --></sort-order-caret><!-- end ngIf: !inSharedByMe() -->
+                            </a>
+                            <a wdcsmkey="topnav-switch-to-thumbnail-view" ng-click="clickThumbnail()" class="th col-thumbnail-toggle">
+                                <span class="icon icon-SVG_icon-view"></span>
+                            </a>
+                        </div>
+                    </div><!-- end ngIf: folderState.viewType !== GalleryTypes.THUMBNAIL_VIEWTYPE -->
+
+                    <!--
+                        Because of a necessary "padding-bottom" style on the #list-view we need to duplicate
+                        #loadMoreIcon element code
+                    -->
+                    <div class="file-browser-content-padding">
+                        <!-- ngIf: folderState.viewType === GalleryTypes.THUMBNAIL_VIEWTYPE -->
+                        <!-- ngIf: folderState.viewType !== GalleryTypes.THUMBNAIL_VIEWTYPE --><div ng-if="folderState.viewType !== GalleryTypes.THUMBNAIL_VIEWTYPE" id="list-view" class="sortable ng-scope" ng-class="{'folder-subfolder':!inRootLayout()}">
+                            <gb-file-browser-list-view class="full-height"><!-- Because of multi-select and overflow cannot be applied on the same element, this below DIV is necessary -->
+<div id="browse-files" class="file-view-wrapper">
+    <ol multi-select="fileManagerInstance" class="file-list-view-container ng-isolate-scope ui-selectable">
+        <!-- Folders -->
+        <!-- ngRepeat: folder in folders track by folder.Id --><li ng-repeat="folder in folders track by folder.Id" data-id="28f94bade3be0b20ebc56afdf481d3840be087b61d859452e7f8e7a6904ad30a" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" data-name="sop" class="filelist folder resource-entry wd-text-r12 ng-scope ui-selectee" ng-class="{'ui-selected':fileManagerInstance.isFolderSelected(folder.Id)}" ng-dblclick="folderState.inRecovery? null : goto('/folder/'+folder.Id)" wdcsmkey="OWNED_LIST_folder_opened" wdcsresourceid="28f94bade3be0b20ebc56afdf481d3840be087b61d859452e7f8e7a6904ad30a">
+            <div id="id_folder_upload_status_28f94bade3be0b20ebc56afdf481d3840be087b61d859452e7f8e7a6904ad30a" class="progress-wrapper">
+                <div class="loadingIndicator"></div>
+            </div>
+            <div class="col-checkbox">
+                <span class="select-box" ng-click="toggleItemSelection('folder', folder)">
+                    <input class="icon-wd-checkbox" type="checkbox" ng-checked="selectedFolders[folder.Id]">
+                    <label class="icon-wd-checkbox-label"><!-- The input / label must be together --></label>
+                </span>
+            </div>
+            <!-- ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() --><div ng-if="!fileManagerInstance.isInTrash() &amp;&amp; !fileManagerInstance.isInRecoveryRoot()" class="col-favorite ng-scope">
+                <span class="action-bar-clickable icon-SVG_star wd-color-class-a2" ng-class="folder.isFavorite ? 'icon-SVG_star-filled activated' : 'icon-SVG_star wd-color-class-a2'" ng-click="toggleFavorite(folder)"></span>
+            </div><!-- end ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() -->
+            <div class="col-filename">
+                <span class="resource-icon resource-icon-sprite-ic_folder" ng-class="getFolderIcon(folder)"></span>
+                <a class="icon-SVG_carat-right folder-indicator" ng-click="folderState.inRecovery? null : goto('/folder/'+folder.Id)"></a>
+                <!-- ngIf: docOrFolderInEditing !== folder.Id && !folderState.inRecovery --><a ng-href="#/folder/28f94bade3be0b20ebc56afdf481d3840be087b61d859452e7f8e7a6904ad30a" class="folder-link truncate ng-binding ng-scope" ng-click="clickedOnResource(folder);" style="max-width: 90%" ng-if="docOrFolderInEditing !== folder.Id &amp;&amp; !folderState.inRecovery" data-id="28f94bade3be0b20ebc56afdf481d3840be087b61d859452e7f8e7a6904ad30a" ng-bind="folder.Name" title="sop" href="#/folder/28f94bade3be0b20ebc56afdf481d3840be087b61d859452e7f8e7a6904ad30a">sop</a><!-- end ngIf: docOrFolderInEditing !== folder.Id && !folderState.inRecovery -->
+                <!-- ngIf: folderState.inRecovery -->
+                <!-- ngIf: docOrFolderInEditing === folder.Id -->
+            </div>
+            <!-- ngIf: !(inOwn() || folderState.inOwnFolder || inSharedByMe()) -->
+            <div class="col-modified ng-binding" ng-bind="getReadableDate(getLastModified(folder))">Yesterday 12:42 PM</div>
+            <div class="unmodified-date hidden ng-binding" ng-bind="getLastModified(folder)">2022-01-11T07:12:13.594Z</div>
+            <div class="col-size ng-binding" ng-bind="getReadableFolderSize(folder) | getHumanReadableSize">6.73 KB</div>
+            <div class="col-kind last-col ng-binding" ng-bind="folder | humanReadableContentTypeName">Folder</div>
+            <div class="clearfix"></div>
+        </li><!-- end ngRepeat: folder in folders track by folder.Id --><li ng-repeat="folder in folders track by folder.Id" data-id="7627f402f3358e2364ecc71319a40c114ce925aadb0aad40565ba5f134d9c5d5" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" data-name="license" class="filelist folder resource-entry wd-text-r12 ng-scope ui-selectee" ng-class="{'ui-selected':fileManagerInstance.isFolderSelected(folder.Id)}" ng-dblclick="folderState.inRecovery? null : goto('/folder/'+folder.Id)" wdcsmkey="OWNED_LIST_folder_opened" wdcsresourceid="7627f402f3358e2364ecc71319a40c114ce925aadb0aad40565ba5f134d9c5d5">
+            <div id="id_folder_upload_status_7627f402f3358e2364ecc71319a40c114ce925aadb0aad40565ba5f134d9c5d5" class="progress-wrapper">
+                <div class="loadingIndicator"></div>
+            </div>
+            <div class="col-checkbox">
+                <span class="select-box" ng-click="toggleItemSelection('folder', folder)">
+                    <input class="icon-wd-checkbox" type="checkbox" ng-checked="selectedFolders[folder.Id]">
+                    <label class="icon-wd-checkbox-label"><!-- The input / label must be together --></label>
+                </span>
+            </div>
+            <!-- ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() --><div ng-if="!fileManagerInstance.isInTrash() &amp;&amp; !fileManagerInstance.isInRecoveryRoot()" class="col-favorite ng-scope">
+                <span class="action-bar-clickable icon-SVG_star wd-color-class-a2" ng-class="folder.isFavorite ? 'icon-SVG_star-filled activated' : 'icon-SVG_star wd-color-class-a2'" ng-click="toggleFavorite(folder)"></span>
+            </div><!-- end ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() -->
+            <div class="col-filename">
+                <span class="resource-icon resource-icon-sprite-ic_folder" ng-class="getFolderIcon(folder)"></span>
+                <a class="icon-SVG_carat-right folder-indicator" ng-click="folderState.inRecovery? null : goto('/folder/'+folder.Id)"></a>
+                <!-- ngIf: docOrFolderInEditing !== folder.Id && !folderState.inRecovery --><a ng-href="#/folder/7627f402f3358e2364ecc71319a40c114ce925aadb0aad40565ba5f134d9c5d5" class="folder-link truncate ng-binding ng-scope" ng-click="clickedOnResource(folder);" style="max-width: 90%" ng-if="docOrFolderInEditing !== folder.Id &amp;&amp; !folderState.inRecovery" data-id="7627f402f3358e2364ecc71319a40c114ce925aadb0aad40565ba5f134d9c5d5" ng-bind="folder.Name" title="license" href="#/folder/7627f402f3358e2364ecc71319a40c114ce925aadb0aad40565ba5f134d9c5d5">license</a><!-- end ngIf: docOrFolderInEditing !== folder.Id && !folderState.inRecovery -->
+                <!-- ngIf: folderState.inRecovery -->
+                <!-- ngIf: docOrFolderInEditing === folder.Id -->
+            </div>
+            <!-- ngIf: !(inOwn() || folderState.inOwnFolder || inSharedByMe()) -->
+            <div class="col-modified ng-binding" ng-bind="getReadableDate(getLastModified(folder))">Yesterday 12:42 PM</div>
+            <div class="unmodified-date hidden ng-binding" ng-bind="getLastModified(folder)">2022-01-11T07:12:02.556Z</div>
+            <div class="col-size ng-binding" ng-bind="getReadableFolderSize(folder) | getHumanReadableSize">6.73 KB</div>
+            <div class="col-kind last-col ng-binding" ng-bind="folder | humanReadableContentTypeName">Folder</div>
+            <div class="clearfix"></div>
+        </li><!-- end ngRepeat: folder in folders track by folder.Id --><li ng-repeat="folder in folders track by folder.Id" data-id="289152be0832bc866464cdc89dd61996e0108303b33387f841e7b0846083a640" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" data-name="Agreements" class="filelist folder resource-entry wd-text-r12 ng-scope ui-selectee" ng-class="{'ui-selected':fileManagerInstance.isFolderSelected(folder.Id)}" ng-dblclick="folderState.inRecovery? null : goto('/folder/'+folder.Id)" wdcsmkey="OWNED_LIST_folder_opened" wdcsresourceid="289152be0832bc866464cdc89dd61996e0108303b33387f841e7b0846083a640">
+            <div id="id_folder_upload_status_289152be0832bc866464cdc89dd61996e0108303b33387f841e7b0846083a640" class="progress-wrapper">
+                <div class="loadingIndicator"></div>
+            </div>
+            <div class="col-checkbox">
+                <span class="select-box" ng-click="toggleItemSelection('folder', folder)">
+                    <input class="icon-wd-checkbox" type="checkbox" ng-checked="selectedFolders[folder.Id]">
+                    <label class="icon-wd-checkbox-label"><!-- The input / label must be together --></label>
+                </span>
+            </div>
+            <!-- ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() --><div ng-if="!fileManagerInstance.isInTrash() &amp;&amp; !fileManagerInstance.isInRecoveryRoot()" class="col-favorite ng-scope">
+                <span class="action-bar-clickable icon-SVG_star wd-color-class-a2" ng-class="folder.isFavorite ? 'icon-SVG_star-filled activated' : 'icon-SVG_star wd-color-class-a2'" ng-click="toggleFavorite(folder)"></span>
+            </div><!-- end ngIf: !fileManagerInstance.isInTrash() && !fileManagerInstance.isInRecoveryRoot() -->
+            <div class="col-filename">
+                <span class="resource-icon resource-icon-sprite-ic_folder" ng-class="getFolderIcon(folder)"></span>
+                <a class="icon-SVG_carat-right folder-indicator" ng-click="folderState.inRecovery? null : goto('/folder/'+folder.Id)"></a>
+                <!-- ngIf: docOrFolderInEditing !== folder.Id && !folderState.inRecovery --><a ng-href="#/folder/289152be0832bc866464cdc89dd61996e0108303b33387f841e7b0846083a640" class="folder-link truncate ng-binding ng-scope" ng-click="clickedOnResource(folder);" style="max-width: 90%" ng-if="docOrFolderInEditing !== folder.Id &amp;&amp; !folderState.inRecovery" data-id="289152be0832bc866464cdc89dd61996e0108303b33387f841e7b0846083a640" ng-bind="folder.Name" title="Agreements" href="#/folder/289152be0832bc866464cdc89dd61996e0108303b33387f841e7b0846083a640">Agreements</a><!-- end ngIf: docOrFolderInEditing !== folder.Id && !folderState.inRecovery -->
+                <!-- ngIf: folderState.inRecovery -->
+                <!-- ngIf: docOrFolderInEditing === folder.Id -->
+            </div>
+            <!-- ngIf: !(inOwn() || folderState.inOwnFolder || inSharedByMe()) -->
+            <div class="col-modified ng-binding" ng-bind="getReadableDate(getLastModified(folder))">Yesterday 12:41 PM</div>
+            <div class="unmodified-date hidden ng-binding" ng-bind="getLastModified(folder)">2022-01-11T07:11:53.567Z</div>
+            <div class="col-size ng-binding" ng-bind="getReadableFolderSize(folder) | getHumanReadableSize">6.73 KB</div>
+            <div class="col-kind last-col ng-binding" ng-bind="folder | humanReadableContentTypeName">Folder</div>
+            <div class="clearfix"></div>
+        </li><!-- end ngRepeat: folder in folders track by folder.Id -->
+
+        <!-- Files -->
+        <!-- ngRepeat: document in documents track by document.Id -->
+    </ol>
+</div>
+</gb-file-browser-list-view>
+                            <!-- ngIf: fileManagerInstance.getMarker() -->
+                        </div><!-- end ngIf: folderState.viewType !== GalleryTypes.THUMBNAIL_VIEWTYPE -->
+                    </div>
+                </div><!-- end ngIf: !showEmptyMessage() && folderState.loaded -->
+            </div><!-- end ngSwitchWhen: -->
+        </div>
+    </div>
+<!-- ngIf: menuTemplate===rightClickMenus.FILE_SELECTED --><ul class="right-click-menu dropdown-menu ng-scope" ng-class="{'open': displayMenu}" ng-style="menuStyle" role="menu" aria-labelledby="default-roles" ng-if="menuTemplate===rightClickMenus.FILE_SELECTED">
+    <!-- ngIf: userActionsMap[selectedItem.item.Id].canDownload -->
+    <li role="presentation">
+        <a tabindex="0" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" ng-click="pickShareLinkDocumentModal(selectedItem.item)" translate="" class="ng-scope" wdcsmkey="LIST_file_browser_right_click_menu_share_a_link">Share a link</a>
+    </li>
+    <li role="presentation">
+        <a tabindex="0" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" ng-click="pickShareDocumentModal(selectedItem.item)" translate="" class="ng-scope" wdcsmkey="LIST_file_browser_right_click_menu_share_by_invite">Invite people</a>
+    </li>
+</ul><!-- end ngIf: menuTemplate===rightClickMenus.FILE_SELECTED -->
+<!-- ngIf: menuTemplate===rightClickMenus.FOLDER_SELECTED -->
+<ul class="right-click-menu dropdown-menu ng-scope" ng-class="" ng-style="menuStyle" role="menu" aria-labelledby="default-roles" ng-if="menuTemplate===rightClickMenus.FOLDER_SELECTED">
+    <!-- ngIf: !isMinimalUser && isFeatureEnabled(Features.UI.FolderDownload) -->
+    <li ng-if="!isMinimalUser &amp;&amp; isFeatureEnabled(Features.UI.FolderDownload)" ng-class="getDownloadDisabledReason()? 'disabled-option': null" popover-trigger="mouseenter" 
+        uib-popover-template="'./file-browser/dropDownFolderDownloadDisabledTooltip.html'" popover-placement="left auto" popover-popup-close-delay="1000" 
+        ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" class="ng-scope" wdcsmkey="LIST_file_browser_right_click_menu_folder_download">
+        <a ng-click="getDownloadDisabledReason()? null : downloadFolder(selectedItem.item)">
+            <translate class="ng-scope">Download</translate>
+        </a>
+    </li><!-- end ngIf: !isMinimalUser && isFeatureEnabled(Features.UI.FolderDownload) -->
+    <li role="presentation">
+        <a tabindex="0" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" ng-click="pickShareLinkFolderModal(selectedItem.item)" translate="" class="ng-scope" wdcsmkey="LIST_file_browser_right_click_menu_share_a_link">Share a link</a>
+    </li>
+    <li role="presentation">
+        <a tabindex="0" ng-attr-wdcsmkey="" ng-attr-wdcsresourceid="" ng-click="pickShareFolderModal(selectedItem.item)" translate="" class="ng-scope" wdcsmkey="LIST_file_browser_right_click_menu_share_by_invite">Invite people</a>
+    </li>
+</ul><!-- end ngIf: menuTemplate===rightClickMenus.FOLDER_SELECTED -->
+<!-- ngIf: menuTemplate===rightClickMenus.MULTI_SELECTED --><ul class="right-click-menu dropdown-menu ng-scope" ng-class="{'open': displayMenu}" ng-style="menuStyle" role="menu" aria-labelledby="default-roles" ng-if="menuTemplate===rightClickMenus.MULTI_SELECTED">
+    <!-- ngIf: deleteSupported() && actionBar.canDelete && !isUploading() -->
+    <!-- ngIf: !deleteSupported() && actionBar.canDelete && !isUploading() -->
+</ul><!-- end ngIf: menuTemplate===rightClickMenus.MULTI_SELECTED --></div>
+</div>
+</div><!-- end ngIf: !layout.news -->
+        <!-- If showing news, only include the content partial. -->
+        <!-- ngIf: layout.news -->
+    </div>
+    <!-- ngInclude: layout.partialModals --><div ng-include="layout.partialModals" class="ng-scope"><!--
+
+    Most of the modals here can be converted to calls to ModalFactory service. The ModalFactory service is a reusable service
+    that can display modals which are very configurable in the text/buttons they display. It returns an actionable promise which resolves/rejects
+    based on button clicks
+
+-->
+<script type="text/ng-template" id="createNoteModal.html" class="ng-scope">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss(); noteState.noteErrorText='';"></button>
+        <translate>MODAL.CREATE_NOTE_MODAL.CREATE_NOTE</translate>
+    </div>
+    <div class="modal-body">
+        <p>
+            <translate>MODAL.CREATE_NOTE_MODAL.ENTER_NOTE_NAME</translate>:
+        </p>
+        <form name="form" ng-submit="createNote()">
+            <input class="form-control create-note-input" type="text" ng-attr-placeholder="" ng-model="modals.noteName" name="noteName" ng-change="noteState.noteErrorText=''" 
+            ng-class="" required autofocus/>
+            <alert-for message="noteState.noteErrorText"></alert-for>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss(); noteState.noteErrorText='';" class="btn cancelBtn" translate>MODAL.CREATE_NOTE_MODAL.CANCEL</a>
+        <a class="btn btn-primary btn-create" ng-click="createNote()" translate>MODAL.CREATE_NOTE_MODAL.CREATE_IT</a>
+    </div>
+</script>
+<script type="text/ng-template" id="deleteFolderModal.html" class="ng-scope">
+    <div class="modal-body">
+        <p ng-bind-html=" 'MODAL.DELETE_FOLDER_MODAL.DELETE_FOLDER_MESSAGE'|translate:{name: folderName} "></p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn cancelBtn" translate>MODAL.DELETE_FOLDER_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="$close()" translate>MODAL.DELETE_FOLDER_MODAL.DELETE_IT</a>
+    </div>
+</script>
+<script type="text/ng-template" id="deleteDocumentModal.html" class="ng-scope">
+    <div class="modal-body">
+        <p translate>MODAL.DELETE_DOCUMENT_MODAL.DELETE_FILE_MESSAGE</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn cancelBtn" translate>MODAL.DELETE_DOCUMENT_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="$close()" translate>MODAL.DELETE_DOCUMENT_MODAL.DELETE_IT</a>
+    </div>
+</script>
+<script type="text/ng-template" id="bulkDeleteModal.html" class="ng-scope">
+    <div class="modal-body">
+        <p translate>MODAL.BULK_DELETE_MODAL.BULK_DELETE_MESSAGE</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn cancelBtn" translate>MODAL.BULK_DELETE_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="bulkDelete()" translate>MODAL.BULK_DELETE_MODAL.DELETE_THEM</a>
+    </div>
+</script>
+<script type="text/ng-template" id="emptyRecycleBinModal.html" class="ng-scope">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss()"></button>
+        <div translate>MODAL.EMPTY_RECYCLE_BIN_MODAL.EMPTY_RECYCLE_BIN</div>
+    </div>
+    <div class="modal-body" translate>
+        MODAL.EMPTY_RECYCLE_BIN_MODAL.EMPTY_RECYCLE_BIN_MESSAGE
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn cancelBtn" translate>MODAL.EMPTY_RECYCLE_BIN_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="emptyRecycleBin()" translate>MODAL.EMPTY_RECYCLE_BIN_MODAL.EMPTY_RECYCLE_BIN</a>
+    </div>
+</script>
+<script type="text/ng-template" id="removePermissionConfirmModal.html" class="ng-scope">
+    <div class="modal-body">
+        <p translate>MODAL.REMOVE_PERMISSION_CONFIRM_MODAL.REMOVE_PERMISSION_MESSAGE</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn cancelBtn" translate>MODAL.REMOVE_PERMISSION_CONFIRM_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="removePermission()" translate>MODAL.REMOVE_PERMISSION_CONFIRM_MODAL.REMOVE_IT</a>
+    </div>
+</script>
+<script type="text/ng-template" id="removeSelfFromShareConfirmModal.html" class="ng-scope">
+    <div class="modal-body">
+        <p translate>MODAL.REMOVE_SELF_FROM_SHARE_CONFIRM_MODAL.REMOVE_SELF_MESSAGE</p>
+    </div>
+    <div class="modal-footer">
+        <a class="btn cancelBtn" ng-click="$dismiss()" translate>MODAL.REMOVE_SELF_FROM_SHARE_CONFIRM_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="$close()" translate>MODAL.REMOVE_SELF_FROM_SHARE_CONFIRM_MODAL.YES_REMOVE</a>
+    </div>
+</script>
+<script type="text/ng-template" id="moveIntoSharedModal.html" class="ng-scope">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss()"></button>
+        <translate>MODAL.MOVE_INTO_SHARED_MODAL.SHARED_FOLDER</translate>
+    </div>
+    <div class="modal-body">
+        <p translate>MODAL.MOVE_INTO_SHARED_MODAL.ADD_CONTENT_MESSAGE</p>
+        <translate translate-values="{name: moveSharedModalName}">MODAL.MOVE_INTO_SHARED_MODAL.SEE_CONTENT_MESSAGE</translate>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn cancelBtn" translate>MODAL.MOVE_INTO_SHARED_MODAL.CANCEL</a>
+        <a class="btn btn-primary" ng-click="$close()" translate>MODAL.MOVE_INTO_SHARED_MODAL.MOVE</a>
+    </div>
+</script>
+<script type="text/ng-template" id="accessRequestSuccessMessage.html" class="ng-scope">
+    <div class="modal-body">
+        <p><b translate>MODAL.ACCESS_REQUEST_MODAL.SUCCESS</b></p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn" translate>MODAL.ACCESS_REQUEST_MODAL.OKAY_BUTTON</a>
+    </div>
+</script>
+<script type="text/ng-template" id="accessRequestErrorMessage.html" class="ng-scope">
+    <div class="modal-body">
+        <p><b translate>MODAL.ACCESS_REQUEST_MODAL.ERROR</b></p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="$dismiss()" class="btn" translate>MODAL.ACCESS_REQUEST_MODAL.OKAY_BUTTON</a>
+    </div>
+</script>
+</div>
+</div>
+<script type="text/template" id="id_document_upload_status_template" class="ng-scope">
+    <div class="loadingIndicator" style="width: <@= progress @>%;<@ if (color) { @> background-color: <@= color @>; <@ } @>"></div>
+</script>
+
+
+
+    <link rel="shortcut icon" ng-href="{% static 'aws/images/favicon.ico' %}" class="ng-scope" href="{% static 'aws/images/favicon.ico' %}">
+
+</div>
+  <div id="notification" ng-class="{'visible': showNotification}" class="ng-scope">
+                      <!-- ngIf: !!title -->
+                      <div class="ballon">
+                          <div class="title ng-binding"></div>
+                          <div ng-bind-html="trustAsHtml(content)" class="ng-binding"></div>
+                          <div class="footer">
+                              <a ng-click="hideCurrent()" class="ng-binding">OK, GOT IT!</a>
+                              <span ng-show="totalNotificationNumber > 0" class="ng-binding ng-hide">1/0</span>
+                          </div>
+                       </div>
+                  </div>
+
+
+</body></html>

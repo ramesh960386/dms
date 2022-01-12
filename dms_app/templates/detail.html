@@ -2,12 +2,42 @@
 
 {% block body %}
     <style>
-        .the-canvas {
+        .the-canvas1 {
           border: 1px solid black;
           direction: ltr;
         }
     </style>
-    <h3>Documents Data</h3><hr>
+
+    <div class="row ">
+        <div class="col">
+            <h3>{{ document.doc_type|title }} data</h3>
+        </div>
+        
+        <div class="col text-end">
+            <a href="javascript:history.go(-1)" type="button" class="btn btn-outline-primary">Back</a>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">Actions
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a class="dropdown-item" href="#">Open</a></li>
+                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Separated link</a></li>
+                    </ul>
+                </div>
+                
+            </div>
+            <button type="button" class="btn btn-outline-primary">Share</button>
+            <button type="button" class="btn btn-outline-primary" id="download-btn" objId="{{ document.id }}"
+                    url="{{ document.document.url }}" file-access="download"
+                    file-name="{{ document.document }}">Download</button>
+        </div>
+    </div>
+    <hr class="my-2">
+
     <div class="row">
         <input type='hidden' id='csrf-token' value='{{ csrf_token }}' />
         <div class="col-4">
@@ -21,16 +51,13 @@
             <p>created_at : {{ document.created_at }}</p>
             <p>modified_by : {{ document.modified_by }}</p>
             <p>updated_at : {{ document.updated_at }}</p>
-            <button type="button" class="btn btn-primary" id="download-btn" objId="{{ document.id }}"
-                    url="{{ document.document.url }}" file-access="download"
-                    file-name="{{ document.document }}">Download PDF</button>
             <button type="button" class="btn btn-primary" id="pdf-btn" objId="{{ document.id }}"
                     url="{{ document.document.url }}" file-access="inline"
                     file-name="{{ document.document }}" >Display PDF</button>
         </div>
 
         <div class="col-6">
-            <canvas id="the-canvas" ></canvas>
+            <canvas id="the-canvas" class="border"></canvas>
         </div>
          <iframe id="myFrame" hidden
                 style="width:600px; height:500px;" frameborder="0">
@@ -40,16 +67,28 @@
     <hr>
 
     <div class="btn-group" role="group" aria-label="Basic outlined example">
-      <a type="button" class="btn btn-outline-primary" href="{% url 'home' %}">Back</a>
-      <a type="button" class="btn btn-outline-primary" href="#">Edit</a>
-      <a type="button" class="btn btn-outline-primary" href="#">Delete</a>
-      <a type="button" class="btn btn-outline-primary" href="#">Share</a>
-      <a type="button" class="btn btn-outline-primary" href="#">History</a>
+        <a href="javascript:history.go(-1)" type="button" class="btn btn-outline-primary">Back</a>
+        <a hidden href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+
+        <a type="button" class="btn btn-outline-primary" href="{% url 'index' %}">DMS Home</a>
+        <a type="button" class="btn btn-outline-primary" href="#">Edit</a>
+        <a type="button" class="btn btn-outline-primary" href="#">Delete</a>
+        <a type="button" class="btn btn-outline-primary" href="#">Share</a>
+        <a type="button" class="btn btn-outline-primary" href="#">History</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
     <script type="text/javascript" src="{% static 'js/best_download.js' %}"></script>
+    <script>
+        $( document ).ready(function() {
+            //console.log( "document loaded" );
+        });
+     
+        $( window ).on( "load", function() {
+            //console.log( "window loaded" );
+        });
+    </script>
 {% endblock %}
 
 

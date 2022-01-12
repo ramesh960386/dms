@@ -109,7 +109,68 @@ $(document).ready(function(){
         });
     });
 
-    $("#pdf-btn").click(function(){
+
+    $( window ).on( "load", function() {
+        var btn = $("#download-btn");
+        var btnUrl = btn.attr('url');
+        var fileAccess = btn.attr('file-access');
+        var filename = btn.attr('file-name');
+        var url = `${window.location.origin}${btnUrl}?type=${fileAccess}`;
+
+        $.ajax({
+            xhrFields: {
+               responseType: 'blob'
+            },
+            type:'GET',
+            url:url,
+            // data: $(this).attr('download'),
+        }).done(function(blob){
+            console.log('get')
+            // https://stackoverflow.com/questions/27861727/loading-a-pdf-file-in-pdf-js-using-a-post-request
+            // https://github.com/mozilla/pdf.js/issues/1136
+            // Loaded via <script> tag, create shortcut to access PDF.js exports.
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+            // The workerSrc property shall be specified.
+            pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+            // Asynchronous download of PDF
+            pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                console.log('PDF loaded');
+                // Fetch the first page
+                var pageNumber = 1;
+                pdf.getPage(pageNumber).then(function(page) {
+                    console.log('Page loaded');
+
+                    var scale = 1.0;
+                    var viewport = page.getViewport({scale: scale});
+
+                    // Prepare canvas using PDF page dimensions
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                    // canvas.height = viewport.height;
+                    // canvas.width = viewport.width;
+                    canvas.height = 600;
+                    canvas.width = 610;
+
+                    // Render PDF page into canvas context
+                    var renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext).promise.then(function () {
+                        console.log('Page rendered0');
+                    });
+                    canvas.classList.add("the-canvas");
+                });
+            }, function (reason) {
+                // PDF loading error
+                console.error(reason);
+            });
+        });
+    });
+
+    $("#pdf-btn1").click(function(){
 //        var objId = $(this).attr('objId');
 //        var url = window.location.origin+$(this).attr('url')
 

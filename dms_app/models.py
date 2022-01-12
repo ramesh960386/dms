@@ -1,6 +1,8 @@
 import os
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.aggregates import Count
+from django.db.models.deletion import CASCADE
 
 
 class Department(models.Model):
@@ -18,11 +20,27 @@ DOC_TYPE = (
 )
 
 
+class DocumentType(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='doc_type', null=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_count(self):
+        # return self._meta.model.objects.aggregate(name_count=Count('name'))
+        # return self._meta.model.objects.filter(name=self.name).aggregate(Count('name'))
+        # return self._meta.model.objects.aggregate(Count('documentmodel'))
+        return self.documentmodel_set.objects.count()
+
+
 class DocumentModel(models.Model):
     doc_name = models.CharField(max_length=200)
-    doc_type = models.CharField(max_length=10, choices=DOC_TYPE)
+    # doc_type = models.CharField(max_length=10, choices=DOC_TYPE)
     # doc_owner = models.ForeignKey(User, on_delete=models.SET_NULL)
-    doc_owner = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_doc_owner')
+    doc_type = models.ForeignKey(DocumentType, on_delete=models.CASCADE)
+    doc_owner = models.ForeignKey(
+        User, null=True, on_delete=models.SET_NULL, related_name='%(class)s_doc_owner')
     doc_dept = models.ForeignKey(Department, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     document = models.FileField(upload_to='uploads/')
