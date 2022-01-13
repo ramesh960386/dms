@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from re import template
+import webbrowser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dms_app.apps.DmsAppConfig',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'rest_framework_swagger',
+    'drf_yasg',
+    'corsheaders',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +56,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # corsheader
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'dms.urls'
@@ -66,6 +75,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            # for swagger error => load static insted of staticfiles in template
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
+            },
         },
     },
 ]
@@ -136,19 +149,25 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # X_FRAME_OPTIONS = 'SAMEORIGIN'
 # X_FRAME_OPTIONS = 'ALLOWALL'
+
+# CORS Settings
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    ),
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.TokenAuthentication',
+    # for blocking api in webbrowser
+    # 'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
     # ),
-    'DEFAULT_PERMISSION_CLASSES':(
-        'rest_framework.permissions.IsAuthenticated',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
-# import mimetypes
-# mimetypes.add_type("text/css", ".css", True)
+
 """
 DEFAULT_RENDERER_CLASSES = (
     'rest_framework.renderers.JSONRenderer',
@@ -166,3 +185,12 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': DEFAULT_RENDERER_CLASSES
 }
 """
+
+# CORS Settings
+CORS_ALLOWED_ORIGINS = [
+    # "https://example.com",
+    # "https://sub.example.com",
+    # "http://localhost:8080",
+    # "http://127.0.0.1:9000",
+    "http://127.0.0.1:5500"
+]

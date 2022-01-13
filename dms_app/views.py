@@ -1,21 +1,26 @@
 import os
+import csv
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views import generic
-from django.http import HttpResponse, StreamingHttpResponse, HttpResponseForbidden, Http404
-from django.http.response import FileResponse
-from .models import DocumentModel, DocumentType
 from django.conf import settings as se
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.renderers import JSONRenderer
+from .models import DocumentModel, DocumentType
+from .forms import DocumentForm
 
 
-def responsedata(status, message, code, data={}):
-    return {"success": status, "data": data, "code": code, "message": message}
+def csv_data(request, mode):
+    # data = {key: value for key, value in request.META.items()}
+    # data = [dict(key=value) for key, value in request.META.items()]
+    if mode == 'open':
+        with open('dict.csv', 'w') as csv_file:
+            writer = csv.writer(csv_file)
+            # [writer.writerow([key, value]) for key, value in request.META.items()]
+            for key, value in request.META.items():
+                writer.writerow([key, value])
+    else:
+        with open('dict.csv') as csv_file:
+            reader = csv.reader(csv_file)
+            mydict = dict(reader)
 
 
 def aws(request):
@@ -29,11 +34,6 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def home(request):
-    context = DocumentModel.objects.all()
-    return render(request, "home.html", {'data': context})
-
-
 class DocumentListView(generic.ListView):
     template_name = 'home.html'
     # model = DocumentModel
@@ -44,6 +44,11 @@ class DocumentListView(generic.ListView):
 
     def get_queryset(self):
         return DocumentModel.objects.filter(doc_type=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super(DocumentListView, self).get_context_data(**kwargs)
+        context['form'] = DocumentForm()
+        return context
 
 
 class DocumentDetailView(generic.DetailView):
@@ -56,60 +61,15 @@ def is_ajax(self):
     return self.META.get("HTTP_X_REQUESTED_WITH") == "XMLHttpRequest"
 
 
-class MediaControl(APIView):
-    # renderer_classes = [JSONRenderer]
-    # permission_classes = (IsAuthenticated,)
+# class BookCreateView(generic.CreateView):
+#     # def get(self, request, *args, **kwargs):
+#     #     context = {'form': DocumentForm()}
+#     #     return render(request, 'books/book-create.html', context)
 
-    def get_object(self, **kwargs):
-        try:
-            return DocumentModel.objects.get(**kwargs)
-        except DocumentModel.DoesNotExist:
-            raise Http404
-
-    def file_mngmt(self, file, option):
-        try:
-            obj = self.get_object(document="uploads/" + file)
-            file_path = os.path.join(
-                se.MEDIA_ROOT, obj.document.name).replace('\\', '/')
-            filename = os.path.basename(file_path)
-
-            if os.path.exists(file_path):
-                response = FileResponse(
-                    obj.document, content_type='application/pdf')
-                # response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
-                response['Content-Length'] = os.path.getsize(file_path)
-                # response['Content-Disposition'] = "inline; filename=%s" % filename
-                # response['Content-Disposition'] = "attachment; filename=%s" % filename
-                response['Content-Disposition'] = "{}; filename={}".format(
-                    option, filename)
-                return response
-            return Response({"data": "path doesn't exists"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({'data': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
-
-    def get_file_access(self, request):
-        user = request.user
-        if user.is_authenticated:
-            if user.is_staff:
-                # If admin, everything is granted
-                return True
-            else:
-                # For simple user, only their documents can be accessed
-                # doc = user.related_PRF_user.i_image  #Customize this...
-                return True
-        # return Response({'data': 'Something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
-        # return HttpResponseForbidden('Not authorized to access this media.')
-        return False
-
-    def get(self, request, file):
-        access_type = request.query_params.get('type')
-        if self.get_file_access(request):
-            return self.file_mngmt(file, access_type)
-        return Response({'data': 'not allowed to access to this media file.'}, status=status.HTTP_401_UNAUTHORIZED)
-
-    def post(self, request, file):
-        access_type = request.query_params.get('type')
-        if self.get_file_access(request):
-            print('ok')
-            return self.file_mngmt(file, access_type)
-        return Response({'data': 'not allowed to access to this media file.'}, status=status.HTTP_401_UNAUTHORIZED)
+#     def post(self, request, *args, **kwargs):
+#         form = BookCreateForm(request.POST)
+#         if form.is_valid():
+#             book = form.save()
+#             book.save()
+#             return HttpResponseRedirect(reverse_lazy('books:detail', args=[book.id]))
+#         return render(request, 'books/book-create.html', {'form': form})

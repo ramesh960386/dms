@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% load static %}
+{% extends "base.html" %} {% load static %} {% load my_filters %}{% load crispy_forms_tags %}
 
 {% block body %}
     <style>
@@ -41,6 +41,7 @@
     <div class="row">
         <input type='hidden' id='csrf-token' value='{{ csrf_token }}' />
         <div class="col-4">
+            <span id="docId" file-name="{{ document.filename }}">{{ document.id }}</span>
             <p>Doc Name : {{ document.doc_name }}</p>
             <p>Doc Type : {{ document.get_doc_type_display }}</p>
             <p>Doc Owner : {{ document.doc_owner }}</p>
@@ -52,42 +53,193 @@
             <p>modified_by : {{ document.modified_by }}</p>
             <p>updated_at : {{ document.updated_at }}</p>
             <button type="button" class="btn btn-primary" id="pdf-btn" objId="{{ document.id }}"
-                    url="{{ document.document.url }}" file-access="inline"
+                    url="{{ document.document.url }}" file-access="inline" hidden
                     file-name="{{ document.document }}" >Display PDF</button>
         </div>
 
         <div class="col-6">
-            <canvas id="the-canvas" class="border"></canvas>
+            <canvas id="pdf-render" class="border"></canvas>            
         </div>
-         <iframe id="myFrame" hidden
-                style="width:600px; height:500px;" frameborder="0">
-        </iframe>
-    </div>
 
+    </div>
     <hr>
 
-    <div class="btn-group" role="group" aria-label="Basic outlined example">
-        <a href="javascript:history.go(-1)" type="button" class="btn btn-outline-primary">Back</a>
-        <a hidden href="{{request.META.HTTP_REFERER|escape}}">Back</a>
-
-        <a type="button" class="btn btn-outline-primary" href="{% url 'index' %}">DMS Home</a>
-        <a type="button" class="btn btn-outline-primary" href="#">Edit</a>
-        <a type="button" class="btn btn-outline-primary" href="#">Delete</a>
-        <a type="button" class="btn btn-outline-primary" href="#">Share</a>
-        <a type="button" class="btn btn-outline-primary" href="#">History</a>
+    <div class="d-flex justify-content-between">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <a href="javascript:history.go(-1)" type="button" class="btn btn-outline-primary">Back</a>
+            <a hidden href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+    
+            <a type="button" class="btn btn-outline-primary" href="{% url 'index' %}">DMS Home</a>
+            <a type="button" class="btn btn-outline-primary" href="#">Edit</a>
+            <a type="button" class="btn btn-outline-primary" href="#">Delete</a>
+            <a type="button" class="btn btn-outline-primary" href="#">Share</a>
+            <a type="button" class="btn btn-outline-primary" href="#">History</a>
+        </div>
+        <span class="page-info">Page <span id="page-num"></span> of <span id="page-count"></span></span>
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+            <button class="btn btn-outline-primary" id="prev-page">
+                <i class="fas fa-arrow-circle-left"></i> Prev Page
+            </button>
+            <button class="btn btn-outline-primary" id="next-page">
+                Next Page <i class="fas fa-arrow-circle-right"></i>
+            </button>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
-    <script type="text/javascript" src="{% static 'js/best_download.js' %}"></script>
     <script>
-        $( document ).ready(function() {
-            //console.log( "document loaded" );
+        const csrf_token = $('meta[name="csrf-token"]').attr('content');
+        const token = 'token 90a03496eddfb421b5b795292eced8b64777f2d8';
+        const btnCtx = document.getElementById('docId');
+        const downloadBtn = document.getElementById("download-btn");
+        const docId = btnCtx.innerHTML;
+        const filename = btnCtx.getAttribute('file-name');
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+        let pdfDoc = null,
+        pageNum = 1,
+        pageIsRendering = false,
+        pageNumIsPending = null;
+
+        const scale = 1.1, //1.5,
+        canvas = document.querySelector('#pdf-render'),
+        ctx = canvas.getContext('2d');
+
+        // Render the page
+        const renderPage = num => {
+            pageIsRendering = true;
+            // Get page
+            pdfDoc.getPage(num).then(page => {
+                // Set scale
+                const viewport = page.getViewport({ scale });
+                // canvas.height = viewport.height;
+                // canvas.width = viewport.width;
+                canvas.height = 600;
+                canvas.width = 610;
+
+                const renderCtx = {
+                    canvasContext: ctx,
+                    viewport
+                };
+
+                page.render(renderCtx).promise.then(() => {
+                    pageIsRendering = false;
+
+                    if (pageNumIsPending !== null) {
+                        renderPage(pageNumIsPending);
+                        pageNumIsPending = null;
+                    }
+                });
+                // Output current page
+                document.querySelector('#page-num').textContent = num;
+            });
+        };
+
+        // Check for pages rendering
+        const queueRenderPage = num => {
+            if (pageIsRendering) {
+                pageNumIsPending = num;
+            } else {
+                renderPage(num);
+            }
+        };
+
+        // Show Prev Page
+        const showPrevPage = () => {
+            if (pageNum <= 1) {
+                return;
+            }
+            pageNum--;
+            queueRenderPage(pageNum);
+        };
+
+        // Show Next Page
+        const showNextPage = () => {
+            if (pageNum >= pdfDoc.numPages) {
+                return;
+            }
+            pageNum++;
+            queueRenderPage(pageNum);
+        };
+
+        // Get Document
+        const displayPdf = (data) => {
+            var blob = new Blob([data] , {type:'application/pdf'})
+            var pdfAsArray = window.URL.createObjectURL(blob);
+            pdfjsLib.getDocument(pdfAsArray).promise.then(pdfDoc_ => {
+                pdfDoc = pdfDoc_;
+                document.querySelector('#page-count').textContent = pdfDoc.numPages;
+                renderPage(pageNum);
+            }).catch(err => {
+                // Display error
+                const div = document.createElement('div');
+                div.className = 'error';
+                div.appendChild(document.createTextNode(err.message));
+                document.querySelector('body').insertBefore(div, canvas);
+                // Remove top bar
+                document.querySelector('.top-bar').style.display = 'none';
+            });
+        }
+
+        // Button Events
+        document.querySelector('#prev-page').addEventListener('click', showPrevPage);
+        document.querySelector('#next-page').addEventListener('click', showNextPage);
+
+        function getObjectapi(url){
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
+                    displayPdf(xhttp.response)
+                }
+            };
+            data = {
+                ids: [1, 2, 3, 4, 5]
+            };
+            xhttp.open("POST", url);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            //xhttp.setRequestHeader("X-CSRFToken", csrf_token); //for SessionAuthentication in drf server
+            xhttp.setRequestHeader("Authorization", token); //for TokenAuthentication in drf server
+            xhttp.responseType = 'blob';
+            xhttp.send(JSON.stringify(data));
+        }
+
+        function downloadPdf(url){
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState === 4 && xhttp.status === 200){                    
+                    const data = window.URL.createObjectURL(xhttp.response);
+                    let link = document.createElement('a');
+                    link.href = data;
+                    link.download = filename;
+                    link.click();
+                    setTimeout(function () {
+                        window.URL.revokeObjectURL(data);
+                    }, 100)
+                }
+            };
+            data = {
+                ids: [1, 2, 3, 4, 5]
+            };
+            xhttp.open("POST", url);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            //xhttp.setRequestHeader("X-CSRFToken", csrf_token); //for SessionAuthentication in drf server
+            xhttp.setRequestHeader("Authorization", token); //for TokenAuthentication in drf server
+            xhttp.responseType = 'blob';
+            xhttp.send(JSON.stringify(data));
+        }
+
+        window.onload = function() {            
+            //const url = 'http://localhost:8000/media/uploads/combinepdf.pdf'
+            //const url = `${window.location.origin}${btnUrl}?type=${fileAccess}`;
+            getObjectapi('/media_access/'+ docId+'/')
+        };
+
+        downloadBtn.addEventListener("click", function(){
+            downloadPdf('/media_access/'+ docId+'/')
         });
-     
-        $( window ).on( "load", function() {
-            //console.log( "window loaded" );
-        });
+
     </script>
 {% endblock %}
 

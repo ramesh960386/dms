@@ -258,3 +258,4 @@ modules.xml
 help/
 #get_token.py
 static/aws
+code_lab/
