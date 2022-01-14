@@ -16,4 +16,7 @@ urlpatterns = [
     path('media/uploads/<str:file>', api.MediaControl.as_view()),
     path('media_access/<int:pk>/', api.MediaAccess.as_view()),
     # api ends here
+    path("drf_template/", views.drf_template, name="drf_template"),
+    path("upload/<int:id>/", views.upload, name="upload"),
+    path("delete/<int:id>/", views.delete, name="delete")
 ]

@@ -259,3 +259,5 @@ help/
 #get_token.py
 static/aws
 code_lab/
+static/drf_template
+dms_app/templates/drf_templates

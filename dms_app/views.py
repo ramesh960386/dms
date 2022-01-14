@@ -1,7 +1,10 @@
+from django.template import RequestContext, Template
 import os
 import csv
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.conf import settings as se
 from .models import DocumentModel, DocumentType
@@ -47,7 +50,7 @@ class DocumentListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(DocumentListView, self).get_context_data(**kwargs)
-        context['form'] = DocumentForm()
+        context['form'] = DocumentForm(initial={'doc_type': self.kwargs['pk']})
         return context
 
 
@@ -73,3 +76,48 @@ def is_ajax(self):
 #             book.save()
 #             return HttpResponseRedirect(reverse_lazy('books:detail', args=[book.id]))
 #         return render(request, 'books/book-create.html', {'form': form})
+
+def drf_template(request):
+    context = {
+        'data': DocumentType.objects.all()
+    }
+    return render(request, 'drf_index.html', context)
+
+
+#################################################################
+
+
+def ip_address_processor(request):
+    return {'ip_address': request.META['REMOTE_ADDR']}
+
+
+def client_ip_view(request):
+    template = Template('{{ title }}: {{ ip_address }}')
+    context = RequestContext(request, {
+        'title': 'Your IP Address',
+    }, [ip_address_processor])
+    return HttpResponse(template.render(context))
+#################################################################
+
+
+def upload(request, id):
+    # request.session['temp_data'] = form.cleaned_data
+    if request.method == 'POST':
+        upload = DocumentForm(request.POST, request.FILES)
+        if upload.is_valid():
+            upload.save()
+            return HttpResponseRedirect(reverse('home', args=[id]))
+            # return redirect('home')
+            # return reverse_lazy('home', kwargs={'pk': id})
+            # HttpResponseRedirect(reverse_lazy('abcfirst', args={'cid': 1}))
+            # return redirect('home', pk=id)
+        return HttpResponseRedirect(reverse('home', args=[id]))
+    return HttpResponseRedirect(reverse('home', args=[id]))
+
+
+def delete(request, id):
+    print(request.path_info)
+    data = get_object_or_404(DocumentModel, id=id)
+    data.delete()
+    # return HttpResponseRedirect(request.path_info)
+    return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))

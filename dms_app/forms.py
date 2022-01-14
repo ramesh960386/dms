@@ -8,7 +8,8 @@ class DocumentForm(forms.ModelForm):
 
     class Meta:
         model = DocumentModel
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('doc_owner',)
 
 
 # https://www.agiliq.com/blog/2019/01/django-createview/
