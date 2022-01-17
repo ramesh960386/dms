@@ -9,6 +9,7 @@ from django.views import generic
 from django.conf import settings as se
 from .models import DocumentModel, DocumentType
 from .forms import DocumentForm
+from django.contrib.auth.models import User
 
 
 def csv_data(request, mode):
@@ -103,9 +104,15 @@ def client_ip_view(request):
 def upload(request, id):
     # request.session['temp_data'] = form.cleaned_data
     if request.method == 'POST':
-        upload = DocumentForm(request.POST, request.FILES)
-        if upload.is_valid():
-            upload.save()
+        # data = request.POST.dict()
+        # user_obj = User.objects.get(pk=request.user.pk)
+        # data['created_by'] = data['modified_by'] = user_obj
+        # data['user'] = request.user
+        form = DocumentForm(request.POST, request.FILES)        
+        if form.is_valid():
+            fm = form.instance
+            fm.doc_owner = fm.created_by = fm.modified_by = request.user
+            form.save()
             return HttpResponseRedirect(reverse('home', args=[id]))
             # return redirect('home')
             # return reverse_lazy('home', kwargs={'pk': id})
@@ -121,3 +128,9 @@ def delete(request, id):
     data.delete()
     # return HttpResponseRedirect(request.path_info)
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+
+# https://django.cowhite.com/#focus
+# https://books.agiliq.com/projects/django-admin-cookbook/en/latest/current_user.html
+# https://stackoverflow.com/questions/25716548/request-user-in-django-model
+# https://stackoverflow.com/questions/67087865/django-form-savecommit-false-not-adding-user-id
