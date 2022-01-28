@@ -1,4 +1,5 @@
 import os
+from django.urls import reverse
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.aggregates import Count
@@ -62,6 +63,12 @@ class DocumentModel(models.Model):
     def filename(self):
         # return self.file.name.split('/')[-1:][0]
         return os.path.basename(self.document.name)
+
+    def get_absolute_url(self):
+        # return reverse('dms:myhome', kwargs={'pk': self.pk})
+        """Returns the url to access a particular instance of MyModelName."""
+        # return reverse('model-detail-view', args=[str(self.id)])
+        return reverse('dms:doc_edit', args=[str(self.id)])
 
     def __str__(self):
         return self.doc_name

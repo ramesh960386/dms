@@ -9,7 +9,6 @@ class DocumentForm(forms.ModelForm):
         # fields = '__all__'
         exclude = ('doc_owner',)
 
-
     def __init__(self, *args, **kwargs):
         # self.created_by = args.remove('user', None)
         # self.created_by = fields.pop('user', None)

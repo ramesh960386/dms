@@ -25,8 +25,12 @@ schema_view = get_schema_view(
 # ends here
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('dms_app.urls')),
+    # path('accounts/', include('django.contrib.auth.urls')),
+    path('admin/', admin.site.urls),   # Django admin route
+    path("", include("home.urls")),  # UI Kits Html files
+    # Auth routes - login / register
+    path("", include("authentication.urls")),
+    path('dms/', include('dms_app.urls')),
     # swagger urls starts here
     re_path(r'^doc(?P<format>\.json|\.yaml)$', schema_view.without_ui(
         cache_timeout=0), name='schema-json'),

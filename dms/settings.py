@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-from re import template
-import webbrowser
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'dms_app.apps.DmsAppConfig',
+    'dms_app',
+    'authentication',
+    'home',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5'
 ]
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +70,8 @@ ROOT_URLCONF = 'dms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static"
 # ]
@@ -198,6 +199,11 @@ CORS_ALLOWED_ORIGINS = [
     # "http://127.0.0.1:9000",
     "http://127.0.0.1:5500"
 ]
+
+
+LOGIN_REDIRECT_URL = "login"  # Route defined in home/urls.py
+LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
+
 
 # local_settings
 try:
