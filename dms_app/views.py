@@ -94,7 +94,7 @@ class DocumentDeleteView(DeleteView):
 
 class DocumentDetailView(DetailView):
     model = DocumentModel
-    template_name = 'detail.html'
+    template_name = 'dms/document-detail.html'
     context_object_name = 'document'
 
     # def get_context_data(self, **kwargs):

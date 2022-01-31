@@ -258,6 +258,8 @@ modules.xml
 help/
 #get_token.py
 static/aws
+static/myassets
 code_lab/
 static/drf_template
 dms_app/templates/drf_templates
+static1/

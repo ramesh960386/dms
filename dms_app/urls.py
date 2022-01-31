@@ -12,8 +12,8 @@ urlpatterns = [
     path('doc_update/<int:pk>/', views.DocumentUpdateView.as_view(), name='doc_edit'),
     path('doc_delete/<int:pk>/',
          views.DocumentDeleteView.as_view(), name='doc_delete'),
-
-    path('detail/<int:pk>/', views.DocumentDetailView.as_view(), name='detail'),
+    path('doc_detail/<int:pk>/',
+         views.DocumentDetailView.as_view(), name='doc_detail'),
 
     # api starts here
     path("hello_world/", api.hello_world, name="hello_world"),
